@@ -1,14 +1,17 @@
 export Square
 
-class Square
+class Square extends Entity
 	new: (@xpos, @ypos) =>
-		@x = @xpos
-		@y = @ypos
+		--pos and scale
+		super @xpos, @ypos
 		@w = 32
 		@h = 32
-		@z = -@ypos
+	
+		--random vars
 		@spd = 2
+
 	update: (dt) =>
+		--movement
 		if mad\key("left") then
 			@x -= @spd
 		elseif mad\key("right") then
@@ -18,7 +21,7 @@ class Square
 		elseif mad\key("down") then
 			@y += @spd
 
-		mad\zord(self)
+		super self
 	draw: =>
 		love.graphics.setColor(255, 255, 255, 255)
 		love.graphics.rectangle("fill", @x, @y, @w, @h)

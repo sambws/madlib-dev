@@ -8,7 +8,7 @@ require.tree("libs")
 --room creation code
 rooms = {
 	start: =>
-		sq = Square(32, 32)
+		sq = Square(300, 32)
 		bb = BigBox(64, 64)
 		mad\addEnt(sq)
 		mad\addEnt(bb)

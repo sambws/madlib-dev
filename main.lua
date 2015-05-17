@@ -3,7 +3,7 @@ require.tree("ents")
 require.tree("libs")
 local rooms = {
   start = function(self)
-    local sq = Square(32, 32)
+    local sq = Square(300, 32)
     local bb = BigBox(64, 64)
     mad:addEnt(sq)
     return mad:addEnt(bb)

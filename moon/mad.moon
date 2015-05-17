@@ -4,12 +4,17 @@ require "libs.require"
 --zording it up
 
 --exports
-export mad, ents, room, switch_room, drawSort
+export mad, ents --core tables
+export room, switch_room --room system
+export drawSort --zord
+export Entity
+
+--debug mode
+debug = true
 
 --rooms
 room = ""
 switch_room = false
-debug = true
 
 --lib
 ents = {}
@@ -66,10 +71,21 @@ mad = {
 			return true
 		else
 			return false
+
 	--dumb test			
 	test: =>
-		print("madlib is working for the requested object")
+		print("madlib is working for the polled object")
 }
 
+--z-orders things
 drawSort = (a, b) ->
 	return a.z > b.z
+
+--base entity class
+class Entity
+	new: (@xpos, @ypos) =>
+		@x = @xpos
+		@y = @ypos
+		@z = -@ypos
+	update: (dt) =>
+		mad\zord(self)

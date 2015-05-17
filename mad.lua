@@ -1,7 +1,7 @@
 require("libs.require")
+local debug = true
 room = ""
 switch_room = false
-local debug = true
 ents = { }
 mad = {
   addEnt = function(self, e)
@@ -72,9 +72,37 @@ mad = {
     end
   end,
   test = function(self)
-    return print("madlib is working for the requested object")
+    return print("madlib is working for the polled object")
   end
 }
 drawSort = function(a, b)
   return a.z > b.z
+end
+do
+  local _base_0 = {
+    update = function(self, dt)
+      return mad:zord(self)
+    end
+  }
+  _base_0.__index = _base_0
+  local _class_0 = setmetatable({
+    __init = function(self, xpos, ypos)
+      self.xpos, self.ypos = xpos, ypos
+      self.x = self.xpos
+      self.y = self.ypos
+      self.z = -self.ypos
+    end,
+    __base = _base_0,
+    __name = "Entity"
+  }, {
+    __index = _base_0,
+    __call = function(cls, ...)
+      local _self_0 = setmetatable({}, _base_0)
+      cls.__init(_self_0, ...)
+      return _self_0
+    end
+  })
+  _base_0.__class = _class_0
+  Entity = _class_0
+  return _class_0
 end
