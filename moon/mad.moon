@@ -1,5 +1,8 @@
 require "libs.require"
 
+--TODO
+--zording it up
+
 --exports
 export mad, ents, room, switch_room
 
@@ -28,7 +31,8 @@ mad = {
 	update: (dt) =>
 		for k, v in pairs ents
 			if v.update ~= nil then v\update(dt)
-		
+	
+	--draw ents
 	draw: =>
 		--draw entities
 		for k, v in pairs ents
