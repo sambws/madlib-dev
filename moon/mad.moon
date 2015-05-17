@@ -4,7 +4,7 @@ require "libs.require"
 --zording it up
 
 --exports
-export mad, ents, room, switch_room
+export mad, ents, room, switch_room, drawSort
 
 --rooms
 room = ""
@@ -66,3 +66,6 @@ mad = {
 	test: =>
 		print("madlib is working for the requested object")
 }
+
+drawSort = (a, b) ->
+	return a.z < b.z

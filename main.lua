@@ -12,8 +12,10 @@ love.load = function()
 end
 love.update = function(dt)
   mad:update(dt)
-  return mad:runRoom("start", rooms.start)
+  mad:runRoom("start", rooms.start)
+  return print("hoy")
 end
 love.draw = function()
+  table.sort(ents, drawSort)
   return mad:draw()
 end

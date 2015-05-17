@@ -71,3 +71,6 @@ mad = {
     return print("madlib is working for the requested object")
   end
 }
+drawSort = function(a, b)
+  return a.z < b.z
+end

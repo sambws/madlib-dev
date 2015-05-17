@@ -23,5 +23,6 @@ love.update = (dt) ->
 
 --draw stuff
 love.draw = ->
+	table.sort(ents, drawSort)
 	mad\draw!
 	--love.graphics.print(32, 32, love.timer.getFPS())
