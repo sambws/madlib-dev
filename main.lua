@@ -1,12 +1,10 @@
-require("lib")
-require("Square")
-require("Test")
-local sq = Square(32, 32)
-local th = Test(64, 64)
+require("mad")
+require.tree("ents")
+require.tree("libs")
 local rooms = {
   start = function(self)
-    mad:addEnt(sq)
-    return mad:addEnt(th)
+    local sq = Square(32, 32)
+    return mad:addEnt(sq)
   end
 }
 love.load = function()

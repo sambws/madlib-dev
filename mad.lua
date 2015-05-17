@@ -1,3 +1,4 @@
+require("libs.require")
 room = ""
 switch_room = false
 local debug = true

@@ -1,14 +1,15 @@
-require "lib"
-require "Square"
-require "Test"
+--the man of the hour
+require "mad"
+
+--require all libs/entities
+require.tree("ents")
+require.tree("libs")
 
 --room creation code
-sq = Square(32, 32)
-th = Test(64, 64)
 rooms = {
 	start: =>
+		sq = Square(32, 32)
 		mad\addEnt(sq)
-		mad\addEnt(th)
 }
 
 --first level

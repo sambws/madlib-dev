@@ -1,20 +1,11 @@
 do
   local _base_0 = {
     update = function(self, dt)
-      if mad:key("left") then
-        self.x = self.x - self.spd
-      elseif mad:key("right") then
-        self.x = self.x + self.spd
-      end
-      if mad:key("up") then
-        self.y = self.y - self.spd
-      elseif mad:key("down") then
-        self.y = self.y + self.spd
-      end
+      self.x = self.x + 2
     end,
     draw = function(self)
-      love.graphics.setColor(255, 255, 0, 255)
-      return love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+      love.graphics.setColor(255, 255, 255, 255)
+      return love.graphics.rectangle("fill", self.x, self.y, 32, 32)
     end
   }
   _base_0.__index = _base_0
@@ -23,10 +14,6 @@ do
       self.xpos, self.ypos = xpos, ypos
       self.x = self.xpos
       self.y = self.ypos
-      self.w = 32
-      self.h = 32
-      self.z = -self.ypos
-      self.spd = 2
     end,
     __base = _base_0,
     __name = "Square"

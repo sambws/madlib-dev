@@ -1,3 +1,5 @@
+require "libs.require"
+
 --exports
 export mad, ents, room, switch_room
 
