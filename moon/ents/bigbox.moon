@@ -1,14 +1,12 @@
 export BigBox
 
-class BigBox
+class BigBox extends Entity
 	new: (@xpos, @ypos) =>
-		@x = @xpos
-		@y = @ypos
+		super @xpos, @ypos
 		@w = 64
 		@h = 64
-		@z = -@ypos
 	update: (dt) =>
-		mad\zord(self)
+		super self
 	draw: =>
 		love.graphics.setColor(255, 0, 0, 255)
 		love.graphics.rectangle("fill", @x, @y, @w, @h)
