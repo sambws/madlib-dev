@@ -9,7 +9,9 @@ require.tree("libs")
 rooms = {
 	start: =>
 		sq = Square(32, 32)
+		bb = BigBox(64, 64)
 		mad\addEnt(sq)
+		mad\addEnt(bb)
 }
 
 --first level
@@ -25,4 +27,4 @@ love.update = (dt) ->
 love.draw = ->
 	table.sort(ents, drawSort)
 	mad\draw!
-	--love.graphics.print(32, 32, love.timer.getFPS())
+	love.graphics.print(love.timer.getFPS(), 32, 32)

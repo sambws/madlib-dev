@@ -37,6 +37,10 @@ mad = {
       end
     end
   end,
+  zord = function(self, s, mod)
+    mod = mod or 0
+    s.z = -s.y - (s.h) + mod
+  end,
   switchRoom = function(self, r)
     room = r
     for k, v in pairs(ents) do
@@ -72,5 +76,5 @@ mad = {
   end
 }
 drawSort = function(a, b)
-  return a.z < b.z
+  return a.z > b.z
 end

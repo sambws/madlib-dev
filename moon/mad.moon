@@ -37,6 +37,10 @@ mad = {
 		--draw entities
 		for k, v in pairs ents
 			if v.draw ~= nil then v\draw!
+	--zord ents
+	zord: (s, mod) =>
+		mod = mod or 0
+		s.z = -s.y - (s.h) + mod
 
 	--set room
 	switchRoom: (r) =>
@@ -68,4 +72,4 @@ mad = {
 }
 
 drawSort = (a, b) ->
-	return a.z < b.z
+	return a.z > b.z

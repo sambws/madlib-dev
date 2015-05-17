@@ -1,20 +1,10 @@
 do
   local _base_0 = {
     update = function(self, dt)
-      if mad:key("left") then
-        self.x = self.x - self.spd
-      elseif mad:key("right") then
-        self.x = self.x + self.spd
-      end
-      if mad:key("up") then
-        self.y = self.y - self.spd
-      elseif mad:key("down") then
-        self.y = self.y + self.spd
-      end
       return mad:zord(self)
     end,
     draw = function(self)
-      love.graphics.setColor(255, 255, 255, 255)
+      love.graphics.setColor(255, 0, 0, 255)
       return love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
     end
   }
@@ -24,13 +14,12 @@ do
       self.xpos, self.ypos = xpos, ypos
       self.x = self.xpos
       self.y = self.ypos
-      self.w = 32
-      self.h = 32
+      self.w = 64
+      self.h = 64
       self.z = -self.ypos
-      self.spd = 2
     end,
     __base = _base_0,
-    __name = "Square"
+    __name = "BigBox"
   }, {
     __index = _base_0,
     __call = function(cls, ...)
@@ -40,6 +29,6 @@ do
     end
   })
   _base_0.__class = _class_0
-  Square = _class_0
+  BigBox = _class_0
   return _class_0
 end

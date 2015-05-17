@@ -4,7 +4,9 @@ require.tree("libs")
 local rooms = {
   start = function(self)
     local sq = Square(32, 32)
-    return mad:addEnt(sq)
+    local bb = BigBox(64, 64)
+    mad:addEnt(sq)
+    return mad:addEnt(bb)
   end
 }
 love.load = function()
@@ -12,10 +14,10 @@ love.load = function()
 end
 love.update = function(dt)
   mad:update(dt)
-  mad:runRoom("start", rooms.start)
-  return print("hoy")
+  return mad:runRoom("start", rooms.start)
 end
 love.draw = function()
   table.sort(ents, drawSort)
-  return mad:draw()
+  mad:draw()
+  return love.graphics.print(love.timer.getFPS(), 32, 32)
 end
