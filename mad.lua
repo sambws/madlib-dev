@@ -1,7 +1,8 @@
 require("libs.require")
-local debug = true
+debug = true
 room = ""
 switch_room = false
+entAmt = 0
 ents = { }
 mad = {
   addEnt = function(self, e)
@@ -9,17 +10,23 @@ mad = {
       e:new()
     end
     table.insert(ents, e)
+    entAmt = entAmt + 1
     if debug then
-      return print("created ent")
+      return print("created ent ", e)
     end
+  end,
+  createEnt = function(self, c)
+    local e = c
+    return self:addEnt(e)
   end,
   removeEnt = function(self, e)
     for k, v in pairs(ents) do
       if v == e then
         table.remove(ents, k)
         if debug then
-          print("removed ent")
+          print("removed ent", v)
         end
+        entAmt = entAmt - 1
       end
     end
   end,
@@ -48,10 +55,10 @@ mad = {
         self:removeEnt(v)
       end
     end
-    if debug then
-      print("switched room to " .. r)
-    end
     switch_room = true
+    if debug then
+      return print("switched room to " .. r)
+    end
   end,
   runRoom = function(self, r, func)
     if switch_room then

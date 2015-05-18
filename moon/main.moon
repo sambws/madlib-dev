@@ -8,10 +8,10 @@ require.tree("libs")
 --room creation code
 rooms = {
 	start: =>
-		sq = Square(300, 32)
-		bb = BigBox(64, 64)
-		mad\addEnt(sq)
-		mad\addEnt(bb)
+		mad\createEnt(Ship(32 ,32))
+		mad\createEnt(Alien(400, 300, -1))
+		mad\createEnt(Alien(0, 300, 1))
+	lair: =>
 }
 
 --first level
@@ -21,10 +21,16 @@ love.load = ->
 --check for room creation/update ents
 love.update = (dt) ->
 	mad\update(dt)
+
 	mad\runRoom("start", rooms.start)
+	mad\runRoom("lair", rooms.lair)
 
 --draw stuff
 love.draw = ->
-	table.sort(ents, drawSort)
+	if not switch_room then table.sort(ents, drawSort)
 	mad\draw!
-	love.graphics.print(love.timer.getFPS(), 32, 32)
+
+	--debugs
+	if debug then
+		love.graphics.print("FPS: " .. love.timer.getFPS(), 16, 16)
+		love.graphics.print("amount of entities: " .. entAmt, 16, 32)

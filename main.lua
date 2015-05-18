@@ -3,21 +3,27 @@ require.tree("ents")
 require.tree("libs")
 local rooms = {
   start = function(self)
-    local sq = Square(300, 32)
-    local bb = BigBox(64, 64)
-    mad:addEnt(sq)
-    return mad:addEnt(bb)
-  end
+    mad:createEnt(Ship(32, 32))
+    mad:createEnt(Alien(400, 300, -1))
+    return mad:createEnt(Alien(0, 300, 1))
+  end,
+  lair = function(self) end
 }
 love.load = function()
   return mad:switchRoom("start")
 end
 love.update = function(dt)
   mad:update(dt)
-  return mad:runRoom("start", rooms.start)
+  mad:runRoom("start", rooms.start)
+  return mad:runRoom("lair", rooms.lair)
 end
 love.draw = function()
-  table.sort(ents, drawSort)
+  if not switch_room then
+    table.sort(ents, drawSort)
+  end
   mad:draw()
-  return love.graphics.print(love.timer.getFPS(), 32, 32)
+  if debug then
+    love.graphics.print("FPS: " .. love.timer.getFPS(), 16, 16)
+    return love.graphics.print("amount of entities: " .. entAmt, 16, 32)
+  end
 end

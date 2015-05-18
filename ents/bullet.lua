@@ -2,20 +2,14 @@ do
   local _parent_0 = Entity
   local _base_0 = {
     update = function(self, dt)
-      if mad:key("left") then
-        self.x = self.x - self.spd
-      elseif mad:key("right") then
-        self.x = self.x + self.spd
-      end
-      if mad:key("up") then
-        self.y = self.y - self.spd
-      elseif mad:key("down") then
-        self.y = self.y + self.spd
+      self.y = self.y - self.spd
+      if self.y <= 0 - self.h then
+        mad:removeEnt(self)
       end
       return _parent_0.update(self, self)
     end,
     draw = function(self)
-      love.graphics.setColor(255, 255, 255, 255)
+      love.graphics.setColor(0, 255, 0, 255)
       return love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
     end
   }
@@ -25,12 +19,12 @@ do
     __init = function(self, xpos, ypos)
       self.xpos, self.ypos = xpos, ypos
       _parent_0.__init(self, self.xpos, self.ypos)
-      self.w = 32
-      self.h = 32
-      self.spd = 2
+      self.w = 16
+      self.h = 16
+      self.spd = 10
     end,
     __base = _base_0,
-    __name = "Square",
+    __name = "Bullet",
     __parent = _parent_0
   }, {
     __index = function(cls, name)
@@ -51,6 +45,6 @@ do
   if _parent_0.__inherited then
     _parent_0.__inherited(_parent_0, _class_0)
   end
-  Square = _class_0
+  Bullet = _class_0
   return _class_0
 end
