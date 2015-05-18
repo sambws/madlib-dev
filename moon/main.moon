@@ -14,8 +14,8 @@ roomEvent = {
 	lair: =>
 }
 
---room setup
-rm = {
+--room registry
+room = {
 	start: {
 		name: "start"
 		event: roomEvent.start
@@ -35,7 +35,7 @@ love.update = (dt) ->
 	mad\update(dt)
 
 	--run all room code
-	for k, v in pairs rm
+	for k, v in pairs room
 		mad\runRoom(v.name, v.event)
 
 love.draw = ->

@@ -9,7 +9,7 @@ local roomEvent = {
   end,
   lair = function(self) end
 }
-local rm = {
+local room = {
   start = {
     name = "start",
     event = roomEvent.start
@@ -24,7 +24,7 @@ love.load = function()
 end
 love.update = function(dt)
   mad:update(dt)
-  for k, v in pairs(rm) do
+  for k, v in pairs(room) do
     mad:runRoom(v.name, v.event)
   end
 end
