@@ -18,9 +18,6 @@ love.update = function(dt)
   return mad:runRoom("lair", rooms.lair)
 end
 love.draw = function()
-  if not switch_room then
-    table.sort(ents, drawSort)
-  end
   mad:draw()
   if debug then
     love.graphics.print("FPS: " .. love.timer.getFPS(), 16, 16)

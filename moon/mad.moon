@@ -16,7 +16,7 @@ export drawSort --zord
 export Entity --base ent class
 
 --debug mode
-debug = true
+debug = false
 
 --rooms
 room = ""
@@ -54,7 +54,9 @@ mad = {
 	
 	--draw all ents
 	draw: =>
-		--draw entities
+		--zord 'em
+		if not switch_room then table.sort(ents, drawSort)
+		--draw 'em
 		for k, v in pairs ents
 			if v.draw ~= nil then v\draw!
 	--zord ents (called in base)

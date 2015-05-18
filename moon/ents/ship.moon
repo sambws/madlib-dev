@@ -19,9 +19,9 @@ class Ship extends Entity
 	
 	update: (dt) =>
 		--movement
-		@x = @x + @xvel
+		@x = @x + @xvel --add velocities
 		@y = @y + @yvel
-		@xvel = @xvel * (1 - math.min(dt*@fric, 1))
+		@xvel = @xvel * (1 - math.min(dt*@fric, 1)) --calculate velocity
 		@yvel = @yvel * (1 - math.min(dt*@fric, 1))
 
 		if mad\key("left") and @xvel < 100 then
@@ -36,7 +36,7 @@ class Ship extends Entity
 		--shooting
 		if mad\key("z") then
 			if not @zpressed then
-				mad\createEnt(Bullet(@x, @y))
+				mad\createEnt(Bullet(@x + 8, @y + (@h / 2)))
 				@zpressed = true
 		else
 			@zpressed = false

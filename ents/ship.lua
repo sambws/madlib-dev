@@ -20,7 +20,7 @@ do
       end
       if mad:key("z") then
         if not self.zpressed then
-          mad:createEnt(Bullet(self.x, self.y))
+          mad:createEnt(Bullet(self.x + 8, self.y + (self.h / 2)))
           self.zpressed = true
         end
       else

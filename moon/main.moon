@@ -27,7 +27,6 @@ love.update = (dt) ->
 
 --draw stuff
 love.draw = ->
-	if not switch_room then table.sort(ents, drawSort)
 	mad\draw!
 
 	--debugs

@@ -9,7 +9,7 @@ do
       return _parent_0.update(self, self)
     end,
     draw = function(self)
-      love.graphics.setColor(0, 255, 0, 255)
+      love.graphics.setColor(0, 255, 255, 255)
       return love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
     end
   }

@@ -19,5 +19,5 @@ class Bullet extends Entity
 
 		super self
 	draw: =>
-		love.graphics.setColor(0, 255, 0, 255)
+		love.graphics.setColor(0, 255, 255, 255)
 		love.graphics.rectangle("fill", @x, @y, @w, @h)

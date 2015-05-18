@@ -1,5 +1,5 @@
 require("libs.require")
-debug = true
+debug = false
 room = ""
 switch_room = false
 entAmt = 0
@@ -38,6 +38,9 @@ mad = {
     end
   end,
   draw = function(self)
+    if not switch_room then
+      table.sort(ents, drawSort)
+    end
     for k, v in pairs(ents) do
       if v.draw ~= nil then
         v:draw()
