@@ -18,6 +18,8 @@ do
       if mad:key("down") and self.yvel > -100 then
         self.yvel = self.yvel + self.spd * dt
       end
+      self.x = mad.clamp(0, self.x, 400 - self.w)
+      self.y = mad.clamp(0, self.y, 600 - self.h)
       if mad:key("z") then
         if not self.zpressed then
           mad:createEnt(Bullet(self.x + 8, self.y + (self.h / 2)))

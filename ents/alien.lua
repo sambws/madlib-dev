@@ -8,19 +8,19 @@ do
         self.x = self.x - self.horspd
       end
       if self.ready then
-        if self.x > 400 then
+        if self.x > 400 - 32 then
           self.dir = -self.dir
         end
         if self.x < 0 then
           self.dir = -self.dir
         end
       else
-        if self.start == -1 then
+        if self.start == 1 then
           if self.x > 200 then
             self.ready = true
           end
         end
-        if self.start == 1 then
+        if self.start == -1 then
           if self.x < 200 then
             self.ready = true
           end

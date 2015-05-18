@@ -16,7 +16,7 @@ export drawSort --zord
 export Entity --base ent class
 
 --debug mode
-debug = false
+debug = true
 
 --rooms
 room = ""
@@ -59,6 +59,7 @@ mad = {
 		--draw 'em
 		for k, v in pairs ents
 			if v.draw ~= nil then v\draw!
+
 	--zord ents (called in base)
 	zord: (s, mod) =>
 		mod = mod or 0
@@ -88,6 +89,12 @@ mad = {
 			return true
 		else
 			return false
+
+	--maff
+	clamp: (low, n, high) ->
+		return math.min(math.max(low, n), high)
+	lerp: (a,b,t) ->
+		return (1-t)*a + t*b
 
 	--dumb test			
 	test: =>

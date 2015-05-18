@@ -9,6 +9,7 @@ class Alien extends Entity
 		@o_y = @ypos
 		@pers = false
 
+		--start will decide what side of default movement dir (1 is left, 1 is right)
 		@start = @s
 		@ready = false
 
@@ -28,15 +29,15 @@ class Alien extends Entity
 
 		--safety
 		if @ready then
-			if @x > 400 then
+			if @x > 400 - 32 then
 				@dir = -@dir
 			if @x < 0 then
 				@dir = -@dir
 		else
-			if @start == -1 then
+			if @start == 1 then
 				if @x > 200 then
 					@ready = true
-			if @start == 1 then
+			if @start == -1 then
 				if @x < 200 then
 					@ready = true
 

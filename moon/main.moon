@@ -8,9 +8,9 @@ require.tree("libs")
 --room creation code
 rooms = {
 	start: =>
-		mad\createEnt(Ship(32 ,32))
-		mad\createEnt(Alien(400, 300, -1))
-		mad\createEnt(Alien(0, 300, 1))
+		mad\createEnt(Ship(200 - 16, 500))
+		mad\createEnt(Alien(432, 300, -1))
+		mad\createEnt(Alien(-32, 300, 1))
 	lair: =>
 }
 

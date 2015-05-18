@@ -24,6 +24,7 @@ class Ship extends Entity
 		@xvel = @xvel * (1 - math.min(dt*@fric, 1)) --calculate velocity
 		@yvel = @yvel * (1 - math.min(dt*@fric, 1))
 
+		--keys
 		if mad\key("left") and @xvel < 100 then
 			@xvel = @xvel - @spd * dt
 		if mad\key("right") and @xvel > -100 then
@@ -32,6 +33,10 @@ class Ship extends Entity
 			@yvel = @yvel - @spd * dt
 		if mad\key("down") and @yvel > -100 then
 			@yvel = @yvel + @spd * dt
+
+		--safety
+		@x = mad.clamp(0, @x, 400 - @w)
+		@y = mad.clamp(0, @y, 600 - @h)
 
 		--shooting
 		if mad\key("z") then

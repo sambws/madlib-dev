@@ -1,5 +1,5 @@
 require("libs.require")
-debug = false
+debug = true
 room = ""
 switch_room = false
 entAmt = 0
@@ -80,6 +80,12 @@ mad = {
     else
       return false
     end
+  end,
+  clamp = function(low, n, high)
+    return math.min(math.max(low, n), high)
+  end,
+  lerp = function(a, b, t)
+    return (1 - t) * a + t * b
   end,
   test = function(self)
     return print("madlib is working for the polled object")
