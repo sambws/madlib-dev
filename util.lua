@@ -4,3 +4,7 @@ col = {
   playerBullet = 2,
   enemyBullet = 3
 }
+path = {
+  img = "res/imgs/",
+  img = "res/snds/"
+}

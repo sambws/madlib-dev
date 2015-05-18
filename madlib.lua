@@ -101,9 +101,6 @@ mad = {
     return print("madlib is working for the polled object")
   end
 }
-path = {
-  img = "res/imgs/"
-}
 drawSort = function(a, b)
   return a.z > b.z
 end

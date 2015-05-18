@@ -110,12 +110,6 @@ mad = {
 		print("madlib is working for the polled object")
 }
 
---resource paths
-path = {
-	img: "res/imgs/"
-	img: "res/snds/"
-}
-
 --reorganizes the table based off of the ents' z value
 drawSort = (a, b) ->
 	return a.z > b.z
