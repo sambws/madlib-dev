@@ -8,11 +8,13 @@ require("util")
 --room creation
 roomEvent = {
 	start: =>
-		--create game objects here!
+		--create entities here!
+		mad\createEnt(Example(0 ,0))
 }
 
 --room registry
 room = {
+	--register rooms here!
 	start: {
 		name: "start"
 		event: roomEvent.start
@@ -20,7 +22,6 @@ room = {
 }
 
 love.load = ->
-	--first room
 	mad\switchRoom("start")
 
 love.update = (dt) ->
