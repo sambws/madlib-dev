@@ -6,7 +6,8 @@ class Bullet extends Entity
 		super @xpos, @ypos
 		@w = 16
 		@h = 16
-		
+		mad\setCollisionGroup(self, col.playerBullet)
+
 		--vars
 		@spd = 10
 	update: (dt) =>
@@ -18,6 +19,7 @@ class Bullet extends Entity
 			mad\removeEnt(self)
 
 		super self
+
 	draw: =>
-		love.graphics.setColor(0, 255, 255, 255)
+		love.graphics.setColor(255, 255, 255, 255)
 		love.graphics.rectangle("fill", @x, @y, @w, @h)

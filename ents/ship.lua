@@ -47,6 +47,7 @@ do
       self.w = 32
       self.h = 32
       self.pers = true
+      mad:setCollisionGroup(self, col.player)
       self.xvel = 0
       self.yvel = 0
       self.fric = 10

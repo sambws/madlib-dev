@@ -1,4 +1,4 @@
-require "libs.require"
+require "libs.require" --require help
 
 --WORKING
 	--persistance
@@ -7,10 +7,14 @@ require "libs.require"
 	--key input
 	--zording
 --TODO
-	--try to make the switchRoom function easier maybe
+	--animation
+	--sounds
+	--camera
+	--collision
+	--map reader
 
 --exports
-export mad, ents, entAmt, debug --core stuff
+export mad, ents, path, entAmt, debug --core stuff
 export room, switch_room --room system
 export drawSort --zord
 export Entity --base ent class
@@ -23,10 +27,9 @@ room = ""
 switch_room = false
 
 --lib
-entAmt = 0
+entAmt = 0 --used for debugging purposes
 ents = {}
 mad = {
-
 	--if the entity has a new function, run it, and then append it to the table
 	addEnt: (e) =>
 		if e.new ~= nil then e\new()
@@ -39,7 +42,7 @@ mad = {
 		e = c
 		@addEnt(e)
 
-	--surprisingly not broken
+	--surprisingly not broken function that removes ents
 	removeEnt: (e) =>
 		for k, v in pairs ents
 			if v == e then
@@ -52,11 +55,9 @@ mad = {
 		for k, v in pairs ents
 			if v.update ~= nil then v\update(dt)
 	
-	--draw all ents
+	--zordin' and drawin'
 	draw: =>
-		--zord 'em
 		if not switch_room then table.sort(ents, drawSort)
-		--draw 'em
 		for k, v in pairs ents
 			if v.draw ~= nil then v\draw!
 
@@ -67,12 +68,9 @@ mad = {
 
 	--set room; delete non-persistent entities
 	switchRoom: (r) =>
-		--set room
 		room = r
-		--delete non-pers ents
 		for k, v in pairs ents
 			if not v.pers then @removeEnt(v)
-		--create room
 		switch_room = true
 		if debug then print("switched room to " .. r)
 
@@ -83,6 +81,7 @@ mad = {
 				func!
 				if debug then print("finished creating " .. r .. " objects for " .. room)
 				switch_room = false
+	
 	--basic keys
 	key: (k) =>
 		if love.keyboard.isDown(k) then
@@ -90,22 +89,38 @@ mad = {
 		else
 			return false
 
-	--maff
+	--set col group for ent
+	setCollisionGroup: (o, g) =>
+		o.col = g
+
+	--super wip
+	collision: (s, c) =>
+		for k, v in pairs ents
+			if v.col == c then
+				print("found thing to collide with")
+
+	--misc maff
 	clamp: (low, n, high) ->
 		return math.min(math.max(low, n), high)
 	lerp: (a,b,t) ->
 		return (1-t)*a + t*b
 
-	--dumb test			
+	--kinda useless; polls object to see if it can access this lib			
 	test: =>
 		print("madlib is working for the polled object")
 }
 
---z-orders things
+--resource paths
+path = {
+	img: "res/imgs/"
+	img: "res/snds/"
+}
+
+--reorganizes the table based off of the ents' z value
 drawSort = (a, b) ->
 	return a.z > b.z
 
---base entity class
+--base entity class; has some base functionality
 class Entity
 	new: (@xpos, @ypos) =>
 		@x = @xpos

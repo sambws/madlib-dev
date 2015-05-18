@@ -1,7 +1,7 @@
-require("mad")
+require("madlib")
 require.tree("ents")
-require.tree("libs")
-local rooms = {
+require("util")
+local roomEvent = {
   start = function(self)
     mad:createEnt(Ship(200 - 16, 500))
     mad:createEnt(Alien(432, 300, -1))
@@ -9,17 +9,29 @@ local rooms = {
   end,
   lair = function(self) end
 }
+local rm = {
+  start = {
+    name = "start",
+    event = roomEvent.start
+  },
+  lair = {
+    name = "lair",
+    event = roomEvent.lair
+  }
+}
 love.load = function()
   return mad:switchRoom("start")
 end
 love.update = function(dt)
   mad:update(dt)
-  mad:runRoom("start", rooms.start)
-  return mad:runRoom("lair", rooms.lair)
+  for k, v in pairs(rm) do
+    mad:runRoom(v.name, v.event)
+  end
 end
 love.draw = function()
   mad:draw()
   if debug then
+    love.graphics.setColor(255, 255, 255, 255)
     love.graphics.print("FPS: " .. love.timer.getFPS(), 16, 16)
     return love.graphics.print("amount of entities: " .. entAmt, 16, 32)
   end

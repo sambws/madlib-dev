@@ -1,12 +1,12 @@
 --the man of the hour
-require "mad"
+require("madlib")
 
---require all libs/entities
-require.tree("ents")
-require.tree("libs")
+--require random util stuff
+require.tree("ents") --get all gameobjects
+require("util")
 
---room creation code
-rooms = {
+--room creation
+roomEvent = {
 	start: =>
 		mad\createEnt(Ship(200 - 16, 500))
 		mad\createEnt(Alien(432, 300, -1))
@@ -14,22 +14,36 @@ rooms = {
 	lair: =>
 }
 
---first level
+--room setup
+rm = {
+	start: {
+		name: "start"
+		event: roomEvent.start
+	}
+	lair: {
+		name: "lair"
+		event: roomEvent.lair
+	}
+}
+
 love.load = ->
+	--first room
 	mad\switchRoom("start")
 
---check for room creation/update ents
 love.update = (dt) ->
+	--update all ents
 	mad\update(dt)
 
-	mad\runRoom("start", rooms.start)
-	mad\runRoom("lair", rooms.lair)
+	--run all room code
+	for k, v in pairs rm
+		mad\runRoom(v.name, v.event)
 
---draw stuff
 love.draw = ->
+	--draw all ents
 	mad\draw!
 
-	--debugs
+	--debuggin'
 	if debug then
+		love.graphics.setColor(255, 255, 255, 255)
 		love.graphics.print("FPS: " .. love.timer.getFPS(), 16, 16)
 		love.graphics.print("amount of entities: " .. entAmt, 16, 32)

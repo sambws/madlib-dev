@@ -81,6 +81,16 @@ mad = {
       return false
     end
   end,
+  setCollisionGroup = function(self, o, g)
+    o.col = g
+  end,
+  collision = function(self, s, c)
+    for k, v in pairs(ents) do
+      if v.col == c then
+        print("found thing to collide with")
+      end
+    end
+  end,
   clamp = function(low, n, high)
     return math.min(math.max(low, n), high)
   end,
@@ -90,6 +100,9 @@ mad = {
   test = function(self)
     return print("madlib is working for the polled object")
   end
+}
+path = {
+  img = "res/imgs/"
 }
 drawSort = function(a, b)
   return a.z > b.z

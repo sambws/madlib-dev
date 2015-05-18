@@ -3,9 +3,9 @@ do
   local _base_0 = {
     update = function(self, dt)
       if self.dir == 1 then
-        self.x = self.x + self.horspd
+        self.x = self.x + self.h_spd
       elseif self.dir == -1 then
-        self.x = self.x - self.horspd
+        self.x = self.x - self.h_spd
       end
       if self.ready then
         if self.x > 400 - 32 then
@@ -28,11 +28,20 @@ do
       end
       self.o_angle = self.o_angle + self.o_spd
       self.y = self.o_y + self.o_rad * math.cos(self.o_angle * math.pi / 180)
+      if self.shoot_timer ~= 0 then
+        self.shoot_timer = self.shoot_timer - 1
+      else
+        self:shoot()
+        self.shoot_timer = 60
+      end
       return _parent_0.update(self, self)
     end,
     draw = function(self)
       love.graphics.setColor(255, 255, 255, 255)
       return love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+    end,
+    shoot = function(self)
+      return mad:createEnt(EnemyBullet(self.x, self.y))
     end
   }
   _base_0.__index = _base_0
@@ -45,13 +54,15 @@ do
       self.h = 32
       self.o_y = self.ypos
       self.pers = false
+      mad:setCollisionGroup(self, col.enemy)
       self.start = self.s
       self.ready = false
       self.o_angle = 0
       self.o_rad = 25
       self.o_spd = 360 / 60
       self.dir = self.s
-      self.horspd = 3
+      self.h_spd = 3
+      self.shoot_timer = 60
     end,
     __base = _base_0,
     __name = "Alien",

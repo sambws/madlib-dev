@@ -2,14 +2,14 @@ do
   local _parent_0 = Entity
   local _base_0 = {
     update = function(self, dt)
-      self.y = self.y - self.spd
-      if self.y <= 0 - self.h then
+      self.y = self.y + self.spd
+      if self.y >= 600 then
         mad:removeEnt(self)
       end
       return _parent_0.update(self, self)
     end,
     draw = function(self)
-      love.graphics.setColor(255, 255, 255, 255)
+      love.graphics.setColor(0, 255, 0, 255)
       return love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
     end
   }
@@ -21,11 +21,11 @@ do
       _parent_0.__init(self, self.xpos, self.ypos)
       self.w = 16
       self.h = 16
-      mad:setCollisionGroup(self, col.playerBullet)
+      mad:setCollisionGroup(self, col.enemyBullet)
       self.spd = 10
     end,
     __base = _base_0,
-    __name = "Bullet",
+    __name = "EnemyBullet",
     __parent = _parent_0
   }, {
     __index = function(cls, name)
@@ -46,6 +46,6 @@ do
   if _parent_0.__inherited then
     _parent_0.__inherited(_parent_0, _class_0)
   end
-  Bullet = _class_0
+  EnemyBullet = _class_0
   return _class_0
 end

@@ -7,6 +7,7 @@ class Ship extends Entity
 		@w = 32
 		@h = 32
 		@pers = true
+		mad\setCollisionGroup(self, col.player)
 
 		--movement vars
 		@xvel = 0
@@ -49,6 +50,8 @@ class Ship extends Entity
 		--room switch test
 		if mad\key("rshift") then
 			mad\switchRoom("coolio")
+
+		--mad\collision(self, col.enemy)
 
 		super self
 	
