@@ -1,17 +1,14 @@
 --the man of the hour
 require("madlib")
 
---require random util stuff
-require.tree("ents") --get all gameobjects
+--require stuff
+require.tree("ents")
 require("util")
 
 --room creation
 roomEvent = {
 	start: =>
-		mad\createEnt(Ship(200 - 16, 500))
-		mad\createEnt(Alien(432, 300, -1))
-		mad\createEnt(Alien(-32, 300, 1))
-	lair: =>
+		--create game objects here!
 }
 
 --room registry
@@ -19,10 +16,6 @@ room = {
 	start: {
 		name: "start"
 		event: roomEvent.start
-	}
-	lair: {
-		name: "lair"
-		event: roomEvent.lair
 	}
 }
 
