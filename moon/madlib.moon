@@ -1,4 +1,5 @@
 require "libs.require" --require help
+anim8 = require "libs.anim8" --animation
 
 --WORKING
 	--persistance
@@ -87,6 +88,24 @@ export mad = {
 			return true
 		else
 			return false
+
+	--returns image
+	img: (p) =>
+		return love.graphics.newImage(p)
+
+	--sets up an image with a grid for animation
+	gImg: (p, fw, fh) =>
+		i = love.graphics.newImage(p)
+		g = anim8.newGrid(fw, fh, i\getWidth(), i\getHeight())
+		return i, g
+
+	--sets up a grid for an image
+	grid: (img, tw, th) =>
+		return anim8.newGrid(tw, th, img\getWidth(), img\getHeight())
+
+	--defines an animation (grid, frames, row, interval)
+	anim: (g, f, r, spd) =>
+		return anim8.newAnimation(g(f, r), spd)
 
 	--gamepad stuff
 	getControllers: =>

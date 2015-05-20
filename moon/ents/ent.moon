@@ -13,6 +13,12 @@ class Example extends Entity
 		@hsp = 2
 		@vsp = 2
 
+		--sprite
+		@sprite, @grid = mad\gImg('img/cool.png', 32, 32)
+
+		--define anims
+		@anim = mad\anim(@grid, '1-2', 1, 0.1)
+
 	update: (dt) =>
 		--movin'
 		@x += @hsp
@@ -30,6 +36,8 @@ class Example extends Entity
 		elseif @y <= 0 then
 			@vsp = -@vsp
 
+		@anim\update(dt)
+
 	draw: =>
 		love.graphics.setColor(255, 255, 255, 255)
-		love.graphics.rectangle("fill", @x, @y, @w, @h)
+		@anim\draw(@sprite, @x, @y)

@@ -14,10 +14,11 @@ do
       elseif self.y <= 0 then
         self.vsp = -self.vsp
       end
+      return self.anim:update(dt)
     end,
     draw = function(self)
       love.graphics.setColor(255, 255, 255, 255)
-      return love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+      return self.anim:draw(self.sprite, self.x, self.y)
     end
   }
   _base_0.__index = _base_0
@@ -30,6 +31,8 @@ do
       self.h = 32
       self.hsp = 2
       self.vsp = 2
+      self.sprite, self.grid = mad:gImg('img/cool.png', 32, 32)
+      self.anim = mad:anim(self.grid, '1-2', 1, 0.1)
     end,
     __base = _base_0,
     __name = "Example",

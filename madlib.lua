@@ -1,4 +1,5 @@
 require("libs.require")
+local anim8 = require("libs.anim8")
 joysticks = love.joystick.getJoysticks()
 debug = true
 room = ""
@@ -84,6 +85,20 @@ mad = {
     else
       return false
     end
+  end,
+  img = function(self, p)
+    return love.graphics.newImage(p)
+  end,
+  gImg = function(self, p, fw, fh)
+    local i = love.graphics.newImage(p)
+    local g = anim8.newGrid(fw, fh, i:getWidth(), i:getHeight())
+    return i, g
+  end,
+  grid = function(self, img, tw, th)
+    return anim8.newGrid(tw, th, img:getWidth(), img:getHeight())
+  end,
+  anim = function(self, g, f, r, spd)
+    return anim8.newAnimation(g(f, r), spd)
   end,
   getControllers = function(self)
     local a = love.joystick.getJoysticks()

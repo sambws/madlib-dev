@@ -20,10 +20,10 @@ do
         end
         self.haxis = mad:joyAxis(self.joy, 1)
         self.vaxis = mad:joyAxis(self.joy, 2)
-        if self.haxis <= -.25 or self.haxis >= .25 then
+        if self.haxis <= -0.25 or self.haxis >= .25 then
           self.x = self.x + (self.haxis * self.spd)
         end
-        if self.vaxis <= -.25 or self.vaxis >= .25 then
+        if self.vaxis <= -0.25 or self.vaxis >= .25 then
           self.y = self.y + (self.vaxis * self.spd)
         end
       end
