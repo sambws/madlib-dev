@@ -2,24 +2,24 @@ do
   local _parent_0 = Entity
   local _base_0 = {
     update = function(self)
-      if joysticks[1] ~= nil then
-        if mad:joyButton(joystick, "a") then
+      if mad:joyConnected(1) then
+        if mad:joyButton(self.joy, "a") then
           self.r = 0
         else
           self.r = 255
         end
-        if mad:joyButton(joystick, "b") then
+        if mad:joyButton(self.joy, "b") then
           self.b = 0
         else
           self.b = 255
         end
-        if mad:joyButton(joystick, "x") then
+        if mad:joyButton(self.joy, "x") then
           self.g = 0
         else
           self.g = 255
         end
-        self.haxis = joystick:getAxis(1)
-        self.vaxis = joystick:getAxis(2)
+        self.haxis = mad:joyAxis(self.joy, 1)
+        self.vaxis = mad:joyAxis(self.joy, 2)
         if self.haxis <= -.25 or self.haxis >= .25 then
           self.x = self.x + (self.haxis * self.spd)
         end
@@ -55,6 +55,7 @@ do
       self.r = 0
       self.b = 0
       self.g = 0
+      self.joy = joystick
     end,
     __base = _base_0,
     __name = "Box",

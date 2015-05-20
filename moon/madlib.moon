@@ -110,6 +110,13 @@ mad = {
 	joyAxis: (c, a) =>
 		return c\getAxis(a)
 
+	--check if there's a certain controller connected
+	joyConnected: (c) =>
+		if joysticks[c] ~= nil
+			return true
+		else
+			return false
+
 	--set col group for ent
 	setCollisionGroup: (o, g) =>
 		o.col = g

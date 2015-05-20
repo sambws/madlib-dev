@@ -96,6 +96,13 @@ mad = {
   joyAxis = function(self, c, a)
     return c:getAxis(a)
   end,
+  joyConnected = function(self, c)
+    if joysticks[c] ~= nil then
+      return true
+    else
+      return false
+    end
+  end,
   setCollisionGroup = function(self, o, g)
     o.col = g
   end,
