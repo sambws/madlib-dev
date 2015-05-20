@@ -152,5 +152,4 @@ do
   })
   _base_0.__class = _class_0
   Entity = _class_0
-  return _class_0
 end

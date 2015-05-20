@@ -14,27 +14,20 @@ require "libs.require" --require help
 	--collision
 	--map reader
 
---exports
-export mad, ents, path, entAmt, debug --core stuff
-export room, switch_room --room system
-export drawSort --zord
-export joysticks --the connected controllers
-export Entity --base ent class
-
 --controllas
-joysticks = love.joystick.getJoysticks()
+export joysticks = love.joystick.getJoysticks()
 
 --debug mode
-debug = true
+export debug = true
 
 --rooms
-room = ""
-switch_room = false
+export room = ""
+export switch_room = false
 
 --lib
-entAmt = 0 --used for debugging purposes
-ents = {}
-mad = {
+export entAmt = 0 --used for debugging purposes
+export ents = {}
+export mad = {
 	--if the entity has a new function, run it, and then append it to the table
 	addEnt: (e) =>
 		if e.new ~= nil then e\new()
@@ -141,11 +134,11 @@ mad = {
 }
 
 --reorganizes the table based off of the ents' z value
-drawSort = (a, b) ->
+export drawSort = (a, b) ->
 	return a.z > b.z
 
 --base entity class; has some base functionality
-class Entity
+export class Entity
 	new: (@xpos, @ypos) =>
 		@x = @xpos
 		@y = @ypos
