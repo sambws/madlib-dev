@@ -19,38 +19,64 @@
     </section>
 
     <section class="main-content">
-      <h3>
-<a id="madlib" class="anchor" href="#madlib" aria-hidden="true"><span class="octicon octicon-link"></span></a>MADLIB</h3>
+      <h1>
+<a id="madlib" class="anchor" href="#madlib" aria-hidden="true"><span class="octicon octicon-link"></span></a>MADLIB</h1>
 
 <p>Madlib is an in-development kit that has built-in shorthand functions for Love2D, and uses Moonscript as it's language of choice to make code pretty and simple.</p>
 
-<h3>
-<a id="api" class="anchor" href="#api" aria-hidden="true"><span class="octicon octicon-link"></span></a>API</h3>
+<h1>
+<a id="api" class="anchor" href="#api" aria-hidden="true"><span class="octicon octicon-link"></span></a>API</h1>
 
 <p>Madlib, in basic terms, is a Lua table with a bunch of useful functions inside. Some of them, such as the gamepad portion of the library, are simply wrapper functions designed to make writing out gamepad functionality in your code easier and more fluid. Others, such as the entity system, is a multitude of functions designed for an easy and lightweight object-oriented entity system. See the REFERENCE portion of this site for more information on the functionality of Madlib.</p>
 
-<h3>
-<a id="reference" class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>REFERENCE</h3>
+<h1>
+<a id="reference-huge-work-in-progress" class="anchor" href="#reference-huge-work-in-progress" aria-hidden="true"><span class="octicon octicon-link"></span></a>REFERENCE (HUGE WORK IN PROGRESS)</h1>
 
 <p>This portion of the site is dedicated to running through the functions of Madlib, and will serve as it's official documentation.  </p>
 
-<h1>
-<a id="entities" class="anchor" href="#entities" aria-hidden="true"><span class="octicon octicon-link"></span></a>ENTITIES</h1>
+<h2>
+<a id="entities" class="anchor" href="#entities" aria-hidden="true"><span class="octicon octicon-link"></span></a>ENTITIES</h2>
 
 <p>The <code>Entity</code> class is the base class that all game objects should extend. For now, it ships with automatic positioning and z-ordering functions in it's step and initialize functions, but will most likely be fleshed out in the future. Use Moonscript's <code>super</code> function to utilize the Entity class to it's fullest extent.  </p>
 
-<p><code>addEnt(entity)</code> is a function used to create entities and add them to the <code>ents</code> table, thus rendering and updating it. The only argument it takes is used to define the entity you wish to create.<br>
+<p><code>addEnt(e)</code> is a function used to create entities and add them to the <code>ents</code> table, thus rendering and updating it. The only argument it takes is used to define the entity you wish to create.<br>
 Example: <code>addEnt(Box(32, 64))</code> would add a new Box entity at an x position of 32 and a y position of 64, if it's entity <code>super</code> is set up properly.</p>
+
+<p><code>destroySelf(e)</code> is a function that is called within entities to remove themselves from the <code>ents</code> table, subsequently stopping all rendering/updating of that game object.</p>
+
+<p><code>zord(s, mod)</code> is a function that is called within the base of the Entity class (so you most likely won't need to call this unless you're working on an entity that is not an Entity). It sets the game object's Z coordinate to -Y, meaning the negative Y position of the object.</p>
+
+<h2>
+<a id="rooms" class="anchor" href="#rooms" aria-hidden="true"><span class="octicon octicon-link"></span></a>ROOMS</h2>
+
+<p>Rooms in Madlib are handled in a very particular way. You register rooms in main.moon, meaning you fill out a table value with it's own <code>name</code> variable and <code>event</code> function. The <code>name</code> variable is used in switching and running the room, while <code>event</code> is filled with the code that is run when the room is switched to. If you're used to Game Maker, think of the <code>event</code> function to be akin to the creation code of each Game Maker room.</p>
+
+<p><code>switchRoom(r)</code> is used to switch the room. The 'r' argument refers to the name of the room you would to switch to. When rooms are switched, the room's event is ran, creating all game objects.</p>
+
+<p><code>@pers</code> is a variable that is optional to fill out in the <code>new:</code> function of entities. If you set it to <code>true</code>, it won't be deleted when the room is switched, making it persistent throughout all rooms. This is handy for things like controllers and backgrounds.</p>
+
+<h2>
+<a id="input" class="anchor" href="#input" aria-hidden="true"><span class="octicon octicon-link"></span></a>INPUT</h2>
+
+<p>Input functions in Madlib are very basic, and mainly exist to make writing code faster. It has functions for use with both controllers and keyboards.</p>
+
+<p><code>key(k)</code> will return <code>true</code> if a certain key is being pressed, with the key being the k variable. See Love2D's <a href="https://love2d.org/wiki/KeyConstant">KeyConstant</a> section for more info on which buttons to check for.</p>
+
+<p><code>joyButton(c, b)</code> is a function that will return <code>true</code> if a certain button (b) is being pressed on a certain controller (c). See LOVE2D's <a href="https://love2d.org/wiki/GamepadButton">GamepadButton</a> section for more info on which buttons to check for.</p>
+
+<p><code>joyAxis(c, a)</code> will return the value of a certain axis (a) on a certain controller (c).</p>
+
+<p><code>joyConnected(c)</code> will return <code>true</code> if a certain controller (c) is connected, and <code>false</code> if it isn't</p>
 
 <h3>
 <a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>TODO</p>
 
 <h3>
 <a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="https://help.github.com/pages">https://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>TODO</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/sambws/madmoon">MADLIB</a> is maintained by <a href="https://github.com/sambws">sambws</a>.</span>
