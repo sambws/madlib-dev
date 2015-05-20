@@ -16,8 +16,7 @@ mad = {
       return print("created ent ", e)
     end
   end,
-  createEnt = function(self, c)
-    local e = c
+  createEnt = function(self, e)
     return self:addEnt(e)
   end,
   removeEnt = function(self, e)

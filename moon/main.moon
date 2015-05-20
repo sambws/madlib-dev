@@ -3,20 +3,13 @@ require "madlib"
 require "reg"
 require.tree "ents"
 
-
---room creation
-roomEvent = {
-	start: =>
-		mad\createEnt(Example(0 ,0))
-		mad\createEnt(Box(0 ,0))
-		--create other entities here!
-}
-
 --room registry
 room = {
 	start: {
 		name: "start"
-		event: roomEvent.start
+		event: =>
+			mad\createEnt(Box(0, 0))
+			mad\createEnt(Example(0, 0))
 	}
 	--register other rooms here!
 }

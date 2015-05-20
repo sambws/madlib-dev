@@ -36,9 +36,9 @@ export mad = {
 		if debug then print("created ent ", e)
 
 	--will put  a new class into the game
-	createEnt: (c) =>
-		e = c
-		@addEnt(e)
+	createEnt: (e) =>
+		a = e
+		@addEnt(a)
 
 	--surprisingly not broken function that removes ents
 	removeEnt: (e) =>
