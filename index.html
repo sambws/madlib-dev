@@ -33,7 +33,10 @@
 <a id="reference" class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>REFERENCE</h3>
 
 <p>This portion of the site is dedicated to running through the functions of Madlib, and will serve as it's official documentation.<br>
-The <code>Entity</code> class is the base class that all game objects should extend. For now, it ships with automatic positioning and z-ordering functions in it's step and initialize functions, but will most likely be fleshed out in the future. Use Moonscript's <code>super</code> function to utilize the Entity class to it's fullest extent.</p>
+The <code>Entity</code> class is the base class that all game objects should extend. For now, it ships with automatic positioning and z-ordering functions in it's step and initialize functions, but will most likely be fleshed out in the future. Use Moonscript's <code>super</code> function to utilize the Entity class to it's fullest extent.  </p>
+
+<p><code>addEnt(entity)</code> is a function used to create entities and add them to the <code>ents</code> table, thus rendering and updating it. The only argument it takes is used to define the entity you wish to create.<br>
+Example: <code>addEnt(new Box(32, 32))</code> would add a new Box entity at 32, 32 if it's entity <code>super</code> is set up properly.</p>
 
 <h3>
 <a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
