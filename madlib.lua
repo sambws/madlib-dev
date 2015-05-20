@@ -17,11 +17,15 @@ mad = {
     end
   end,
   createEnt = function(self, e)
-    return self:addEnt(e)
+    local a = e
+    return self:addEnt(a)
   end,
   removeEnt = function(self, e)
     for k, v in pairs(ents) do
       if v == e then
+        if v.destroy ~= nil then
+          e:destroy()
+        end
         table.remove(ents, k)
         if debug then
           print("removed ent", v)

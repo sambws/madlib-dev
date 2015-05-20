@@ -2,7 +2,7 @@ export Box
 
 class Box extends Entity
 	new: (@xpos, @ypos) =>
-		
+
 		--setup
 		super @xpos, @ypos
 		@w = 64
@@ -43,9 +43,9 @@ class Box extends Entity
 			@vaxis = mad\joyAxis(@joy, 2)
 
 			--deadzonin'
-			if @haxis <= -.25 or @haxis >= .25 then
+			if @haxis <= -0.25 or @haxis >= .25 then
 				@x += @haxis * @spd
-			if @vaxis <= -.25 or @vaxis >= .25 then
+			if @vaxis <= -0.25 or @vaxis >= .25 then
 				@y += @vaxis * @spd
 
 		--keyboard stuff

@@ -11,7 +11,7 @@ room = {
 			mad\createEnt(Box(0, 0))
 			mad\createEnt(Example(0, 0))
 	}
-	--register other rooms here!
+	--register other rooms here
 }
 
 love.load = ->

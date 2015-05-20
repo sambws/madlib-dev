@@ -44,6 +44,7 @@ export mad = {
 	removeEnt: (e) =>
 		for k, v in pairs ents
 			if v == e then
+				if v.destroy ~= nil then e\destroy()
 				table.remove(ents, k)
 				if debug then print("removed ent", v)
 				entAmt -= 1
