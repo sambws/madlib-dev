@@ -1,9 +1,10 @@
 require("madlib")
+require("reg")
 require.tree("ents")
-require("util")
 local roomEvent = {
   start = function(self)
-    return mad:createEnt(Example(0, 0))
+    mad:createEnt(Example(0, 0))
+    return mad:createEnt(Box(0, 0))
   end
 }
 local room = {

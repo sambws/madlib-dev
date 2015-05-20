@@ -5,6 +5,7 @@ require "libs.require" --require help
 	--room system
 	--entities
 	--key input
+	--game controller input
 	--zording
 --TODO
 	--animation
@@ -17,7 +18,11 @@ require "libs.require" --require help
 export mad, ents, path, entAmt, debug --core stuff
 export room, switch_room --room system
 export drawSort --zord
+export joysticks --the connected controllers
 export Entity --base ent class
+
+--controllas
+joysticks = love.joystick.getJoysticks()
 
 --debug mode
 debug = true
@@ -89,6 +94,22 @@ mad = {
 		else
 			return false
 
+	--gamepad stuff
+	getControllers: =>
+		a = love.joystick.getJoysticks()
+		return a
+
+	--get gamepad button down
+	joyButton: (c, b) =>
+		if c\isGamepadDown(b) then
+			return true
+		else
+			return false
+
+	--get axis of gamepad
+	joyAxis: (c, a) =>
+		return c\getAxis(a)
+
 	--set col group for ent
 	setCollisionGroup: (o, g) =>
 		o.col = g
@@ -102,12 +123,14 @@ mad = {
 	--misc maff
 	clamp: (low, n, high) ->
 		return math.min(math.max(low, n), high)
+		
 	lerp: (a,b,t) ->
 		return (1-t)*a + t*b
 
 	--kinda useless; polls object to see if it can access this lib			
 	test: =>
 		print("madlib is working for the polled object")
+
 }
 
 --reorganizes the table based off of the ents' z value

@@ -1,4 +1,5 @@
 require("libs.require")
+joysticks = love.joystick.getJoysticks()
 debug = true
 room = ""
 switch_room = false
@@ -80,6 +81,20 @@ mad = {
     else
       return false
     end
+  end,
+  getControllers = function(self)
+    local a = love.joystick.getJoysticks()
+    return a
+  end,
+  joyButton = function(self, c, b)
+    if c:isGamepadDown(b) then
+      return true
+    else
+      return false
+    end
+  end,
+  joyAxis = function(self, c, a)
+    return c:getAxis(a)
   end,
   setCollisionGroup = function(self, o, g)
     o.col = g

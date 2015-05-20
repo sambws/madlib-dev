@@ -1,24 +1,24 @@
---the man of the hour
-require("madlib")
+--stuff to require; madlib, data registry, entities
+require "madlib"
+require "reg"
+require.tree "ents"
 
---require stuff
-require.tree("ents")
-require("util")
 
 --room creation
 roomEvent = {
 	start: =>
-		--create entities here!
 		mad\createEnt(Example(0 ,0))
+		mad\createEnt(Box(0 ,0))
+		--create other entities here!
 }
 
 --room registry
 room = {
-	--register rooms here!
 	start: {
 		name: "start"
 		event: roomEvent.start
 	}
+	--register other rooms here!
 }
 
 love.load = ->
