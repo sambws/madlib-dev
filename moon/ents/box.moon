@@ -58,6 +58,9 @@ class Box extends Entity
 		elseif mad.input\key("down") then
 			@y += @spd
 
+		@x = mad.math.clamp(0, @x, 400 - @w)
+		@y = mad.math.clamp(0, @y, 600 - @h)
+
 		super self
 
 	draw: =>

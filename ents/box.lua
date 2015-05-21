@@ -37,7 +37,9 @@ do
       elseif mad.input:key("down") then
         self.y = self.y + self.spd
       end
-      return _parent_0.update(self, self)
+      self.x = mad.math.clamp(0, self.x, 400 - self.w)
+      self.y = mad.math.clamp(0, self.y, 600 - self.h)
+      return _parent_0
     end,
     draw = function(self)
       love.graphics.setColor(self.r, self.b, self.g, 255)
