@@ -2,24 +2,24 @@ do
   local _parent_0 = Entity
   local _base_0 = {
     update = function(self)
-      if mad:joyConnected(1) then
-        if mad:joyButton(self.joy, "a") then
+      if mad.input:joyConnected(1) then
+        if mad.input:joyButton(self.joy, "a") then
           self.r = 0
         else
           self.r = 255
         end
-        if mad:joyButton(self.joy, "b") then
+        if mad.input:joyButton(self.joy, "b") then
           self.b = 0
         else
           self.b = 255
         end
-        if mad:joyButton(self.joy, "x") then
+        if mad.input:joyButton(self.joy, "x") then
           self.g = 0
         else
           self.g = 255
         end
-        self.haxis = mad:joyAxis(self.joy, 1)
-        self.vaxis = mad:joyAxis(self.joy, 2)
+        self.haxis = mad.input:joyAxis(self.joy, 1)
+        self.vaxis = mad.input:joyAxis(self.joy, 2)
         if self.haxis <= -0.25 or self.haxis >= .25 then
           self.x = self.x + (self.haxis * self.spd)
         end
@@ -27,16 +27,17 @@ do
           self.y = self.y + (self.vaxis * self.spd)
         end
       end
-      if mad:key("left") then
+      if mad.input:key("left") then
         self.x = self.x - self.spd
-      elseif mad:key("right") then
+      elseif mad.input:key("right") then
         self.x = self.x + self.spd
       end
-      if mad:key("up") then
+      if mad.input:key("up") then
         self.y = self.y - self.spd
-      elseif mad:key("down") then
+      elseif mad.input:key("down") then
         self.y = self.y + self.spd
       end
+      return _parent_0.update(self, self)
     end,
     draw = function(self)
       love.graphics.setColor(self.r, self.b, self.g, 255)

@@ -15,7 +15,7 @@ col = {
 
 --resource paths
 path = {
-	img: "res/imgs/"
-	img: "res/snds/"
+	img: "res/img/"
+	snd: "res/snd/"
 	--add any other external resource paths here!
 }

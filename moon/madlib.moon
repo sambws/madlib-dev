@@ -1,5 +1,6 @@
 require "libs.require" --require help
 anim8 = require "libs.anim8" --animation
+require "libs.TEsound" --sound
 
 --WORKING
 	--persistance
@@ -9,8 +10,6 @@ anim8 = require "libs.anim8" --animation
 	--game controller input
 	--zording
 --TODO
-	--animation
-	--sounds
 	--camera
 	--collision
 	--map reader
@@ -29,27 +28,7 @@ export switch_room = false
 export entAmt = 0 --used for debugging purposes
 export ents = {}
 export mad = {
-	--if the entity has a new function, run it, and then append it to the table
-	addEnt: (e) =>
-		if e.new ~= nil then e\new()
-		table.insert(ents, e)
-		entAmt += 1
-		if debug then print("created ent ", e)
-
-	--will put  a new class into the game
-	createEnt: (e) =>
-		a = e
-		@addEnt(a)
-
-	--surprisingly not broken function that removes ents
-	removeEnt: (e) =>
-		for k, v in pairs ents
-			if v == e then
-				if v.destroy ~= nil then e\destroy()
-				table.remove(ents, k)
-				if debug then print("removed ent", v)
-				entAmt -= 1
-
+	--core functions
 	--update all ents
 	update: (dt) =>
 		for k, v in pairs ents
@@ -61,91 +40,129 @@ export mad = {
 		for k, v in pairs ents
 			if v.draw ~= nil then v\draw!
 
-	--zord ents (called in base)
-	zord: (s, mod) =>
-		mod = mod or 0
-		s.z = -s.y - (s.h) + mod
 
-	--set room; delete non-persistent entities
-	switchRoom: (r) =>
-		room = r
-		for k, v in pairs ents
-			if not v.pers then @removeEnt(v)
-		switch_room = true
-		if debug then print("switched room to " .. r)
+	--entities
+	object:
+		--run entity's new function and then add it to the ent table
+		addEnt: (e) =>
+			if e.new ~= nil then e\new()
+			table.insert(ents, e)
+			entAmt += 1
+			if debug then print("created ent ", e)
 
-	--run room creation func
-	runRoom: (r, func) =>
-		if switch_room
-			if room == r
-				func!
-				if debug then print("finished creating " .. r .. " objects for " .. room)
-				switch_room = false
-	
-	--basic keys
-	key: (k) =>
-		if love.keyboard.isDown(k) then
-			return true
-		else
-			return false
+		--will put a new class into the game
+		createEnt: (e) =>
+			a = e
+			@addEnt(a)
 
-	--returns image
-	img: (p) =>
-		return love.graphics.newImage(p)
+		--weird and probably doens't work
+		removeEnt: (e) =>
+			for k, v in pairs ents
+				if v == e then
+					if v.destroy ~= nil then e\destroy()
+					table.remove(ents, k)
+					if debug then print("removed ent", v)
+					entAmt -= 1
 
-	--sets up an image with a grid for animation
-	gImg: (p, fw, fh) =>
-		i = love.graphics.newImage(p)
-		g = anim8.newGrid(fw, fh, i\getWidth(), i\getHeight())
-		return i, g
+	--drawing and animating
+	sprite:
+		--returns a basic image from a path
+		img: (p) =>
+			return love.graphics.newImage(path.img .. p)
 
-	--sets up a grid for an image
-	grid: (img, tw, th) =>
-		return anim8.newGrid(tw, th, img\getWidth(), img\getHeight())
+		--sets up an image with a grid for animation
+		gImg: (p, fw, fh) =>
+			i = love.graphics.newImage(path.img .. p)
+			g = anim8.newGrid(fw, fh, i\getWidth(), i\getHeight())
+			return i, g
 
-	--defines an animation (grid, frames, row, interval)
-	anim: (g, f, r, spd) =>
-		return anim8.newAnimation(g(f, r), spd)
+		--sets up a grid for an image
+		grid: (img, tw, th) =>
+			return anim8.newGrid(tw, th, img\getWidth(), img\getHeight())
 
-	--gamepad stuff
-	getControllers: =>
-		a = love.joystick.getJoysticks()
-		return a
+		--defines an animation (grid, frames, row, interval)
+		anim: (g, f, r, spd) =>
+			return anim8.newAnimation(g(f, r), spd)
 
-	--get gamepad button down
-	joyButton: (c, b) =>
-		if c\isGamepadDown(b) then
-			return true
-		else
-			return false
+		--zord ents (called in base)
+		zord: (s, mod) =>
+			mod = mod or 0
+			s.z = -s.y - (s.h) + mod
 
-	--get axis of gamepad
-	joyAxis: (c, a) =>
-		return c\getAxis(a)
+	input:
+		--basic keyboard keys
+		key: (k) =>
+			if love.keyboard.isDown(k) then
+				return true
+			else
+				return false
 
-	--check if there's a certain controller connected
-	joyConnected: (c) =>
-		if joysticks[c] ~= nil
-			return true
-		else
-			return false
+		--get controller list
+		getControllers: =>
+			a = love.joystick.getJoysticks()
+			return a
+
+		--get gamepad button down
+		joyButton: (c, b) =>
+			if c\isGamepadDown(b) then
+				return true
+			else
+				return false
+
+		--get axis of gamepad
+		joyAxis: (c, a) =>
+			return c\getAxis(a)
+
+		--check if there's a certain controller connected
+		joyConnected: (c) =>
+			if joysticks[c] ~= nil
+				return true
+			else
+				return false
+
+	--rooms
+	room:
+		--set room; delete non-persistent entities
+		switchRoom: (r) =>
+			room = r
+			for k, v in pairs ents
+				if not v.pers then @removeEnt(v)
+			switch_room = true
+			if debug then print("switched room to " .. r)
+
+		--run room creation func
+		runRoom: (r, func) =>
+			if switch_room
+				if room == r
+					func!
+					if debug then print("finished creating " .. r .. " objects for " .. room)
+					switch_room = false
+
+	--sound functionality
+	audio:
+		playSound: (sound, tags, v, p) =>
+			v = v or 1
+			p = p or 1
+			TEsound.play(path.snd .. sound, tags, v, p)
+
+		--loop sound
+		loopSound: (sound, tags, n, v, p) =>
+			v = v or 1
+			p = p or 1
+			n = n or nil
+			TEsound.playLooping(path.snd .. sound, tags, n, v, p)
+
+	--math stuff
+	math:
+		clamp: (low, n, high) ->
+			return math.min(math.max(low, n), high)
+			
+		lerp: (a,b,t) ->
+			return (1-t)*a + t*b
 
 	--set col group for ent
 	setCollisionGroup: (o, g) =>
 		o.col = g
-
-	--super wip
-	collision: (s, c) =>
-		for k, v in pairs ents
-			if v.col == c then
-				print("found thing to collide with")
-
-	--misc maff
-	clamp: (low, n, high) ->
-		return math.min(math.max(low, n), high)
-		
-	lerp: (a,b,t) ->
-		return (1-t)*a + t*b
 
 	--kinda useless; polls object to see if it can access this lib			
 	test: =>
@@ -164,4 +181,4 @@ export class Entity
 		@y = @ypos
 		@z = -@ypos
 	update: (dt) =>
-		mad\zord(self)
+		mad.sprite\zord(self)

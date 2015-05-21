@@ -3,6 +3,6 @@ col = {
   player = 0
 }
 path = {
-  img = "res/imgs/",
-  img = "res/snds/"
+  img = "res/img/",
+  snd = "res/snd/"
 }

@@ -14,7 +14,8 @@ do
       elseif self.y <= 0 then
         self.vsp = -self.vsp
       end
-      return self.anim:update(dt)
+      self.anim:update(dt)
+      return _parent_0.update(self, self)
     end,
     draw = function(self)
       love.graphics.setColor(255, 255, 255, 255)
@@ -31,8 +32,8 @@ do
       self.h = 32
       self.hsp = 2
       self.vsp = 2
-      self.sprite, self.grid = mad:gImg('img/cool.png', 32, 32)
-      self.anim = mad:anim(self.grid, '1-2', 1, 0.1)
+      self.sprite, self.grid = mad.sprite:gImg('cool.png', 32, 32)
+      self.anim = mad.sprite:anim(self.grid, '1-2', 1, 0.1)
     end,
     __base = _base_0,
     __name = "Example",

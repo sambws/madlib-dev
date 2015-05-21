@@ -14,10 +14,10 @@ class Example extends Entity
 		@vsp = 2
 
 		--sprite
-		@sprite, @grid = mad\gImg('img/cool.png', 32, 32)
+		@sprite, @grid = mad.sprite\gImg('cool.png', 32, 32)
 
 		--define anims
-		@anim = mad\anim(@grid, '1-2', 1, 0.1)
+		@anim = mad.sprite\anim(@grid, '1-2', 1, 0.1)
 
 	update: (dt) =>
 		--movin'
@@ -37,6 +37,8 @@ class Example extends Entity
 			@vsp = -@vsp
 
 		@anim\update(dt)
+
+		super self
 
 	draw: =>
 		love.graphics.setColor(255, 255, 255, 255)

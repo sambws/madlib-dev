@@ -5,18 +5,19 @@ local room = {
   start = {
     name = "start",
     event = function(self)
-      mad:createEnt(Box(0, 0))
-      return mad:createEnt(Example(0, 0))
+      mad.object:createEnt(Box(0, 0))
+      return mad.object:createEnt(Example(0, 0))
     end
   }
 }
 love.load = function()
-  return mad:switchRoom("start")
+  mad.room:switchRoom("start")
+  return mad.audio:playSound("DUHDUHDUH.mp3", "music")
 end
 love.update = function(dt)
   mad:update(dt)
   for k, v in pairs(room) do
-    mad:runRoom(v.name, v.event)
+    mad.room:runRoom(v.name, v.event)
   end
 end
 love.draw = function()

@@ -8,14 +8,15 @@ room = {
 	start: {
 		name: "start"
 		event: =>
-			mad\createEnt(Box(0, 0))
-			mad\createEnt(Example(0, 0))
+			mad.object\createEnt(Box(0, 0))
+			mad.object\createEnt(Example(0, 0))
 	}
 	--register other rooms here
 }
 
 love.load = ->
-	mad\switchRoom("start")
+	mad.room\switchRoom("start")
+	mad.audio\playSound("DUHDUHDUH.mp3", "music")
 
 love.update = (dt) ->
 	--update all ents
@@ -23,7 +24,7 @@ love.update = (dt) ->
 
 	--run all room code
 	for k, v in pairs room
-		mad\runRoom(v.name, v.event)
+		mad.room\runRoom(v.name, v.event)
 
 love.draw = ->
 	--draw all ents
