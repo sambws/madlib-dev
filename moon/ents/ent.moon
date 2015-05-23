@@ -19,10 +19,12 @@ class Example extends Entity
 		--define anims
 		@anim = mad.sprite\anim(@grid, '1-2', 1, 0.1)
 
+		mad\setCollisionGroup(self, col.obj)
+
 	update: (dt) =>
 		--movin'
-		@x += @hsp
-		@y += @vsp
+		--@x += @hsp
+		--@y += @vsp
 
 		--safety x
 		if @x >= (400 - @w) then

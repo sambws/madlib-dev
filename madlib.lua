@@ -24,6 +24,11 @@ mad = {
         v:draw()
       end
     end
+    if debug then
+      love.graphics.setColor(255, 255, 255, 255)
+      love.graphics.print("FPS: " .. love.timer.getFPS(), 16, 16)
+      return love.graphics.print("amount of entities: " .. entAmt, 16, 32)
+    end
   end,
   object = {
     addEnt = function(self, e)
@@ -149,10 +154,29 @@ mad = {
     end,
     lerp = function(a, b, t)
       return (1 - t) * a + t * b
+    end,
+    distance = function(x1, y1, x2, y2)
+      local dx = x1 - x2
+      local dy = y1 - y2
+      return math.sqrt((dx * dx + dy * dy))
     end
   },
   setCollisionGroup = function(self, o, g)
     o.col = g
+  end,
+  checkCol = function(self, s, x, y, colg)
+    for k, v in pairs(ents) do
+      if v.col == colg and v ~= s then
+        if self:boundingBox(x, y, s, v) then
+          return true
+        else
+          return false
+        end
+      end
+    end
+  end,
+  boundingBox = function(self, x, y, o, o2)
+    return x < o2.x + o2.w and o2.x < x + o.w and y < o2.y + o2.h and o2.y < y + o.h
   end,
   test = function(self)
     return print("madlib is working for the polled object")

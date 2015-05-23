@@ -2,22 +2,24 @@ do
   local _parent_0 = Entity
   local _base_0 = {
     update = function(self, dt)
-      if self.x >= (400 - self.w) then
-        self.hsp = -self.hsp
-      elseif self.x <= 0 then
-        self.hsp = -self.hsp
+      self.dx, self.dy = 0, 0
+      if mad.input:key("right") then
+        self.dx = self.spd * dt
+      elseif mad.input:key("left") then
+        self.dx = -self.spd * dt
       end
-      if self.y >= (600 - self.h) then
-        self.vsp = -self.vsp
-      elseif self.y <= 0 then
-        self.vsp = -self.vsp
+      if mad.input:key("up") then
+        self.dy = -self.spd * dt
+      elseif mad.input:key("down") then
+        self.dy = self.spd * dt
       end
-      self.anim:update(dt)
-      return _parent_0.update(self, self)
+      if self.dx ~= 0 or self.dy ~= 0 then
+        self.x, self.y = world:move(self, self.x + self.dx, self.y + self.dy)
+      end
     end,
     draw = function(self)
       love.graphics.setColor(255, 255, 255, 255)
-      return self.anim:draw(self.sprite, self.x, self.y)
+      return love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
     end
   }
   _base_0.__index = _base_0
@@ -28,14 +30,11 @@ do
       _parent_0.__init(self, self.xpos, self.ypos)
       self.w = 32
       self.h = 32
-      self.hsp = 2
-      self.vsp = 2
-      self.sprite, self.grid = mad.sprite:gImg('cool.png', 32, 32)
-      self.anim = mad.sprite:anim(self.grid, '1-2', 1, 0.1)
-      return mad:setCollisionGroup(self, col.obj)
+      self.spd = 80
+      return world:add(self, self.x, self.y, self.w, self.h)
     end,
     __base = _base_0,
-    __name = "Example",
+    __name = "Player",
     __parent = _parent_0
   }, {
     __index = function(cls, name)
@@ -56,6 +55,6 @@ do
   if _parent_0.__inherited then
     _parent_0.__inherited(_parent_0, _class_0)
   end
-  Example = _class_0
+  Player = _class_0
   return _class_0
 end

@@ -20,26 +20,30 @@ do
         end
         self.haxis = mad.input:joyAxis(self.joy, 1)
         self.vaxis = mad.input:joyAxis(self.joy, 2)
-        if self.haxis <= -0.25 or self.haxis >= .25 then
-          self.x = self.x + (self.haxis * self.spd)
+        if self.haxis <= -0.25 and not mad:checkCol(self, self.x - 10, self.y, col.obj) then
+          self.x = self.x + (self.haxis * self.spd + 1)
+        elseif self.haxis >= 0.25 and not mad:checkCol(self, self.x + 10, self.y, col.obj) then
+          self.x = self.x + (self.haxis * self.spd + 1)
         end
-        if self.vaxis <= -0.25 or self.vaxis >= .25 then
-          self.y = self.y + (self.vaxis * self.spd)
+        if self.vaxis <= -0.25 and not mad:checkCol(self, self.x, self.y - 10, col.obj) then
+          self.y = self.y + (self.vaxis * self.spd + 1)
+        elseif self.vaxis >= 0.25 and not mad:checkCol(self, self.x, self.y + 10, col.obj) then
+          self.y = self.y + (self.vaxis * self.spd + 1)
         end
       end
-      if mad.input:key("left") then
+      if mad.input:key("left") and not mad:checkCol(self, self.x - 10, self.y, col.obj) then
         self.x = self.x - self.spd
-      elseif mad.input:key("right") then
+      elseif mad.input:key("right") and not mad:checkCol(self, self.x + 10, self.y, col.obj) then
         self.x = self.x + self.spd
       end
-      if mad.input:key("up") then
+      if mad.input:key("up") and not mad:checkCol(self, self.x, self.y - 10, col.obj) then
         self.y = self.y - self.spd
-      elseif mad.input:key("down") then
+      elseif mad.input:key("down") and not mad:checkCol(self, self.x, self.y + 10, col.obj) then
         self.y = self.y + self.spd
       end
       self.x = mad.math.clamp(0, self.x, 400 - self.w)
       self.y = mad.math.clamp(0, self.y, 600 - self.h)
-      return _parent_0
+      return _parent_0.update(self, self)
     end,
     draw = function(self)
       love.graphics.setColor(self.r, self.b, self.g, 255)
@@ -59,6 +63,7 @@ do
       self.b = 0
       self.g = 0
       self.joy = joystick
+      return mad:setCollisionGroup(self, col.player)
     end,
     __base = _base_0,
     __name = "Box",

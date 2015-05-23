@@ -19,6 +19,9 @@ class Box extends Entity
 		--joy var
 		@joy = joystick
 
+		--set group for collision
+		mad\setCollisionGroup(self, col.player)
+
 	update: =>
 
 		--if there's a joystick connected...
@@ -43,19 +46,24 @@ class Box extends Entity
 			@vaxis = mad.input\joyAxis(@joy, 2)
 
 			--deadzonin'
-			if @haxis <= -0.25 or @haxis >= .25 then
-				@x += @haxis * @spd
-			if @vaxis <= -0.25 or @vaxis >= .25 then
-				@y += @vaxis * @spd
+			if @haxis <= -0.25 and not mad\checkCol(@, @x-10, @y, col.obj) then
+				@x += @haxis * @spd + 1
+			elseif @haxis >= 0.25 and not mad\checkCol(@, @x+10, @y, col.obj) then
+				@x += @haxis * @spd + 1
+		
+			if @vaxis <= -0.25 and not mad\checkCol(@, @x, @y-10, col.obj) then
+				@y += @vaxis * @spd + 1
+			elseif @vaxis >= 0.25 and not mad\checkCol(@, @x, @y+10, col.obj) then
+				@y += @vaxis * @spd + 1
 
 		--keyboard stuff
-		if mad.input\key("left") then
+		if mad.input\key("left") and not mad\checkCol(@, @x-10, @y, col.obj) then
 			@x -= @spd
-		elseif mad.input\key("right") then
+		elseif mad.input\key("right") and not mad\checkCol(@, @x+10, @y, col.obj) then
 			@x += @spd
-		if mad.input\key("up") then
+		if mad.input\key("up") and not mad\checkCol(@, @x, @y-10, col.obj) then
 			@y -= @spd
-		elseif mad.input\key("down") then
+		elseif mad.input\key("down") and not mad\checkCol(@, @x, @y+10, col.obj) then
 			@y += @spd
 
 		@x = mad.math.clamp(0, @x, 400 - @w)

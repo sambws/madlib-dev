@@ -9,7 +9,8 @@ joystick = joysticks[1]
 
 --collision groups
 col = {
-	player: 0	
+	player: 0
+	obj: 1
 	--add more collision groups here!
 }
 

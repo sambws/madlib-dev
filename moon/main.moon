@@ -8,15 +8,14 @@ room = {
 	start: {
 		name: "start"
 		event: =>
-			mad.object\createEnt(Box(0, 0))
-			mad.object\createEnt(Example(0, 0))
+			mad.object\createEnt(Example(200, 200))
+			mad.object\createEnt(Box(300, 300))
 	}
 	--register other rooms here
 }
 
 love.load = ->
 	mad.room\switchRoom("start")
-	mad.audio\playSound("DUHDUHDUH.mp3", "music")
 
 love.update = (dt) ->
 	--update all ents
@@ -29,9 +28,3 @@ love.update = (dt) ->
 love.draw = ->
 	--draw all ents
 	mad\draw!
-
-	--debuggin'
-	if debug then
-		love.graphics.setColor(255, 255, 255, 255)
-		love.graphics.print("FPS: " .. love.timer.getFPS(), 16, 16)
-		love.graphics.print("amount of entities: " .. entAmt, 16, 32)

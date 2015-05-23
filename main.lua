@@ -5,14 +5,13 @@ local room = {
   start = {
     name = "start",
     event = function(self)
-      mad.object:createEnt(Box(0, 0))
-      return mad.object:createEnt(Example(0, 0))
+      mad.object:createEnt(Example(200, 200))
+      return mad.object:createEnt(Box(300, 300))
     end
   }
 }
 love.load = function()
-  mad.room:switchRoom("start")
-  return mad.audio:playSound("DUHDUHDUH.mp3", "music")
+  return mad.room:switchRoom("start")
 end
 love.update = function(dt)
   mad:update(dt)
@@ -21,10 +20,5 @@ love.update = function(dt)
   end
 end
 love.draw = function()
-  mad:draw()
-  if debug then
-    love.graphics.setColor(255, 255, 255, 255)
-    love.graphics.print("FPS: " .. love.timer.getFPS(), 16, 16)
-    return love.graphics.print("amount of entities: " .. entAmt, 16, 32)
-  end
+  return mad:draw()
 end

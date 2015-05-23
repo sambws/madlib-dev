@@ -9,9 +9,10 @@ require "libs.TEsound" --sound
 	--key input
 	--game controller input
 	--zording
+	--basic collision functions
 --TODO
 	--camera
-	--collision
+	--optimize functions so they don't all use fat arrows (i'm a dumbass)
 	--map reader
 
 --controllas
@@ -25,10 +26,11 @@ export room = ""
 export switch_room = false
 
 --lib
-export entAmt = 0 --used for debugging purposes
+export entAmt = 0
 export ents = {}
 export mad = {
 	--core functions
+	
 	--update all ents
 	update: (dt) =>
 		for k, v in pairs ents
@@ -39,6 +41,11 @@ export mad = {
 		if not switch_room then table.sort(ents, drawSort)
 		for k, v in pairs ents
 			if v.draw ~= nil then v\draw!
+		--debuggin'
+		if debug then
+			love.graphics.setColor(255, 255, 255, 255)
+			love.graphics.print("FPS: " .. love.timer.getFPS(), 16, 16)
+			love.graphics.print("amount of entities: " .. entAmt, 16, 32)
 
 
 	--entities
@@ -55,7 +62,7 @@ export mad = {
 			a = e
 			@addEnt(a)
 
-		--weird and probably doens't work
+		--weird and probably doensn't work
 		removeEnt: (e) =>
 			for k, v in pairs ents
 				if v == e then
@@ -89,6 +96,7 @@ export mad = {
 			mod = mod or 0
 			s.z = -s.y - (s.h) + mod
 
+	--what the player will input to the game
 	input:
 		--basic keyboard keys
 		key: (k) =>
@@ -140,6 +148,7 @@ export mad = {
 
 	--sound functionality
 	audio:
+		--plays a sound
 		playSound: (sound, tags, v, p) =>
 			v = v or 1
 			p = p or 1
@@ -160,9 +169,27 @@ export mad = {
 		lerp: (a,b,t) ->
 			return (1-t)*a + t*b
 
+		distance: ( x1, y1, x2, y2 ) ->
+			dx = x1 - x2
+			dy = y1 - y2
+			return math.sqrt ( dx * dx + dy * dy )
+
 	--set col group for ent
 	setCollisionGroup: (o, g) =>
 		o.col = g
+
+	--will look through the table looking for ents with the requested tag, checks if they're colliding with it, and returns t/f
+	checkCol: (s, x, y, colg) =>
+		for k, v in pairs ents
+			if v.col == colg and v ~= s then
+				if @boundingBox(x, y, s, v) then
+					return true
+				else
+					return false
+
+	--check if object is overlapping other object
+	boundingBox: (x, y, o, o2) =>
+		return x < o2.x+o2.w and o2.x < x+o.w and y < o2.y+o2.h and o2.y < y+o.h
 
 	--kinda useless; polls object to see if it can access this lib			
 	test: =>
