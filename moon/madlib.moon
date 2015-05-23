@@ -178,18 +178,29 @@ export mad = {
 	setCollisionGroup: (o, g) =>
 		o.col = g
 
-	--will look through the table looking for ents with the requested tag, checks if they're colliding with it, and returns t/f
-	checkCol: (s, x, y, colg) =>
+	--will return how many objects of a given tag are within an object's boundingbox
+	colList: (s, x, y, colg) =>
+		list = {}
 		for k, v in pairs ents
 			if v.col == colg and v ~= s then
 				if @boundingBox(x, y, s, v) then
-					return true
-				else
-					return false
+					table.insert(list, v)
+		return list
+
+	--will automatically return the size of a colList
+	checkCol: (s, x, y, colg) =>
+		return self.getArraySize(@colList(s, x, y, colg))
 
 	--check if object is overlapping other object
 	boundingBox: (x, y, o, o2) =>
 		return x < o2.x+o2.w and o2.x < x+o.w and y < o2.y+o2.h and o2.y < y+o.h
+
+	--will return the amount of values in a given table
+	getArraySize: (tab) ->
+		c = 0
+		for k, v in pairs (tab) do
+			c += 1
+		return c
 
 	--kinda useless; polls object to see if it can access this lib			
 	test: =>

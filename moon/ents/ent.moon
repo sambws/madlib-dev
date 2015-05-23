@@ -38,10 +38,8 @@ class Example extends Entity
 		elseif @y <= 0 then
 			@vsp = -@vsp
 
-		@anim\update(dt)
-
 		super self
 
 	draw: =>
 		love.graphics.setColor(255, 255, 255, 255)
-		@anim\draw(@sprite, @x, @y)
+		love.graphics.rectangle("fill", @x, @y, @w, @h)

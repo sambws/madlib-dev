@@ -6,6 +6,8 @@ local room = {
     name = "start",
     event = function(self)
       mad.object:createEnt(Example(200, 200))
+      mad.object:createEnt(Example(200 - 32, 200))
+      mad.object:createEnt(Example(200 - 32, 200 - 32))
       return mad.object:createEnt(Box(300, 300))
     end
   }

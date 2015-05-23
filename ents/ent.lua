@@ -12,12 +12,11 @@ do
       elseif self.y <= 0 then
         self.vsp = -self.vsp
       end
-      self.anim:update(dt)
       return _parent_0.update(self, self)
     end,
     draw = function(self)
       love.graphics.setColor(255, 255, 255, 255)
-      return self.anim:draw(self.sprite, self.x, self.y)
+      return love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
     end
   }
   _base_0.__index = _base_0

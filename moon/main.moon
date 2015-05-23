@@ -9,6 +9,8 @@ room = {
 		name: "start"
 		event: =>
 			mad.object\createEnt(Example(200, 200))
+			mad.object\createEnt(Example(200-32, 200))
+			mad.object\createEnt(Example(200-32, 200-32))
 			mad.object\createEnt(Box(300, 300))
 	}
 	--register other rooms here

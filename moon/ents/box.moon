@@ -26,7 +26,6 @@ class Box extends Entity
 
 		--if there's a joystick connected...
 		if mad.input\joyConnected(1) then
-
 			--do some button stuff
 			if mad.input\joyButton(@joy, "a") then
 				@r = 0
@@ -45,25 +44,27 @@ class Box extends Entity
 			@haxis = mad.input\joyAxis(@joy, 1)
 			@vaxis = mad.input\joyAxis(@joy, 2)
 
-			--deadzonin'
-			if @haxis <= -0.25 and not mad\checkCol(@, @x-10, @y, col.obj) then
-				@x += @haxis * @spd + 1
-			elseif @haxis >= 0.25 and not mad\checkCol(@, @x+10, @y, col.obj) then
-				@x += @haxis * @spd + 1
-		
-			if @vaxis <= -0.25 and not mad\checkCol(@, @x, @y-10, col.obj) then
-				@y += @vaxis * @spd + 1
-			elseif @vaxis >= 0.25 and not mad\checkCol(@, @x, @y+10, col.obj) then
-				@y += @vaxis * @spd + 1
+			if mad\checkCol(@, @x-10, @y, col.obj) < 1 then
+				if @haxis <= -0.25
+						@x += @haxis * @spd + 1
+			if mad\checkCol(@, @x+10, @y, col.obj) < 1 then
+				if @haxis >= 0.25
+					@x += @haxis * @spd + 1
 
-		--keyboard stuff
-		if mad.input\key("left") and not mad\checkCol(@, @x-10, @y, col.obj) then
+			if mad\checkCol(@, @x, @y-10, col.obj) < 1 then
+				if @vaxis <= -0.25
+					@y += @vaxis * @spd + 1
+			if mad\checkCol(@, @x, @y+10, col.obj) < 1 then
+				if @vaxis >= 0.25
+					@y += @vaxis * @spd + 1
+
+		if mad.input\key("left") and mad\checkCol(@, @x-10, @y, col.obj) < 1 then
 			@x -= @spd
-		elseif mad.input\key("right") and not mad\checkCol(@, @x+10, @y, col.obj) then
+		elseif mad.input\key("right") and mad\checkCol(@, @x+10, @y, col.obj) < 1 then
 			@x += @spd
-		if mad.input\key("up") and not mad\checkCol(@, @x, @y-10, col.obj) then
+		if mad.input\key("up") and mad\checkCol(@, @x, @y-10, col.obj) < 1 then
 			@y -= @spd
-		elseif mad.input\key("down") and not mad\checkCol(@, @x, @y+10, col.obj) then
+		elseif mad.input\key("down") and mad\checkCol(@, @x, @y+10, col.obj) < 1 then
 			@y += @spd
 
 		@x = mad.math.clamp(0, @x, 400 - @w)
