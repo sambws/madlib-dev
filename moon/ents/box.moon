@@ -44,19 +44,16 @@ class Box extends Entity
 			@haxis = mad.input\joyAxis(@joy, 1)
 			@vaxis = mad.input\joyAxis(@joy, 2)
 
-			if mad\checkCol(@, @x-10, @y, col.obj) < 1 then
-				if @haxis <= -0.25
-						@x += @haxis * @spd + 1
-			if mad\checkCol(@, @x+10, @y, col.obj) < 1 then
-				if @haxis >= 0.25
+			--check for collisions and deadzones
+			if @haxis <= -0.25 and mad\checkCol(@, @x-10, @y, col.obj) < 1
 					@x += @haxis * @spd + 1
+			if @haxis >= 0.25 and mad\checkCol(@, @x+10, @y, col.obj) < 1 then
+				@x += @haxis * @spd + 1
 
-			if mad\checkCol(@, @x, @y-10, col.obj) < 1 then
-				if @vaxis <= -0.25
-					@y += @vaxis * @spd + 1
-			if mad\checkCol(@, @x, @y+10, col.obj) < 1 then
-				if @vaxis >= 0.25
-					@y += @vaxis * @spd + 1
+			if @vaxis <= -0.25 and mad\checkCol(@, @x, @y-10, col.obj) < 1
+				@y += @vaxis * @spd + 1
+			if @vaxis >= 0.25 and mad\checkCol(@, @x, @y+10, col.obj) < 1
+				@y += @vaxis * @spd + 1
 
 		if mad.input\key("left") and mad\checkCol(@, @x-10, @y, col.obj) < 1 then
 			@x -= @spd

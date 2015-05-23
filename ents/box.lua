@@ -20,25 +20,17 @@ do
         end
         self.haxis = mad.input:joyAxis(self.joy, 1)
         self.vaxis = mad.input:joyAxis(self.joy, 2)
-        if mad:checkCol(self, self.x - 10, self.y, col.obj) < 1 then
-          if self.haxis <= -0.25 then
-            self.x = self.x + (self.haxis * self.spd + 1)
-          end
+        if self.haxis <= -0.25 and mad:checkCol(self, self.x - 10, self.y, col.obj) < 1 then
+          self.x = self.x + (self.haxis * self.spd + 1)
         end
-        if mad:checkCol(self, self.x + 10, self.y, col.obj) < 1 then
-          if self.haxis >= 0.25 then
-            self.x = self.x + (self.haxis * self.spd + 1)
-          end
+        if self.haxis >= 0.25 and mad:checkCol(self, self.x + 10, self.y, col.obj) < 1 then
+          self.x = self.x + (self.haxis * self.spd + 1)
         end
-        if mad:checkCol(self, self.x, self.y - 10, col.obj) < 1 then
-          if self.vaxis <= -0.25 then
-            self.y = self.y + (self.vaxis * self.spd + 1)
-          end
+        if self.vaxis <= -0.25 and mad:checkCol(self, self.x, self.y - 10, col.obj) < 1 then
+          self.y = self.y + (self.vaxis * self.spd + 1)
         end
-        if mad:checkCol(self, self.x, self.y + 10, col.obj) < 1 then
-          if self.vaxis >= 0.25 then
-            self.y = self.y + (self.vaxis * self.spd + 1)
-          end
+        if self.vaxis >= 0.25 and mad:checkCol(self, self.x, self.y + 10, col.obj) < 1 then
+          self.y = self.y + (self.vaxis * self.spd + 1)
         end
       end
       if mad.input:key("left") and mad:checkCol(self, self.x - 10, self.y, col.obj) < 1 then
