@@ -11,10 +11,11 @@ anim8 = require "libs.anim8" --animation
 	--game controller input
 	--zording
 	--basic collision functions
---TODO
 	--camera
+	--really basic map reader
+--TODO
 	--optimize functions so they don't all use fat arrows (i'm a dumbass)
-	--map reader
+	--official™ cool™ level™ editor™
 
 --controllas
 export joysticks = love.joystick.getJoysticks()
