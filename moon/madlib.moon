@@ -1,11 +1,10 @@
 require "libs.require" --require help
 require "libs.TEsound" --sound
-export camera = require "libs.camera" --camera
 anim8 = require "libs.anim8" --animation
+export camera = require "libs.camera" --camera
 
 --WORKING
-	--persistance
-	--room system
+	--room system/persistence
 	--entities
 	--key input
 	--game controller input
@@ -16,6 +15,8 @@ anim8 = require "libs.anim8" --animation
 --TODO
 	--optimize functions so they don't all use fat arrows (i'm a dumbass)
 	--official™ cool™ level™ editor™
+	--spend 400 hours organizing this mess
+	--in-game debug console???
 
 --controllas
 export joysticks = love.joystick.getJoysticks()

@@ -18,12 +18,13 @@ col = {
 path = {
 	img: "res/img/"
 	snd: "res/snd/"
+	dat: "res/dat/"
 	--add any other external resource paths here!
 }
 
 --this will read the file for a level, loading in the player and all blocks
 export loadLevel = (filename) ->
-	fn = filename .. ".txt"
+	fn = path.dat .. filename .. ".txt"
 	file = assert(io.open(fn, "r"))
 	
 	--create player

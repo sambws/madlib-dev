@@ -18,7 +18,7 @@ local room = {
 love.load = function()
   cam = camera(0, 0, 1)
   mad.cam:look(cam, 0, 0)
-  return mad.room:switchRoom("start")
+  return mad.room:switchRoom("lair")
 end
 love.update = function(dt)
   mad:update(dt)

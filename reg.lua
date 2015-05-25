@@ -5,10 +5,11 @@ col = {
 }
 path = {
   img = "res/img/",
-  snd = "res/snd/"
+  snd = "res/snd/",
+  dat = "res/dat/"
 }
 loadLevel = function(filename)
-  local fn = filename .. ".txt"
+  local fn = path.dat .. filename .. ".txt"
   local file = assert(io.open(fn, "r"))
   local p_x = tonumber(file:read("*line"))
   local p_y = tonumber(file:read("*line"))

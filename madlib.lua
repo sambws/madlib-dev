@@ -1,7 +1,7 @@
 require("libs.require")
 require("libs.TEsound")
-camera = require("libs.camera")
 local anim8 = require("libs.anim8")
+camera = require("libs.camera")
 joysticks = love.joystick.getJoysticks()
 debug = true
 room = ""
