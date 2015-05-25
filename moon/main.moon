@@ -30,3 +30,5 @@ love.update = (dt) ->
 love.draw = ->
 	--draw all ents
 	mad\draw!
+
+love.timer.sleep = ->

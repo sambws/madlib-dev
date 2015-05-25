@@ -20,29 +20,31 @@ do
         end
         self.haxis = mad.input:joyAxis(self.joy, 1)
         self.vaxis = mad.input:joyAxis(self.joy, 2)
-        if self.haxis <= -0.25 and mad:checkCol(self, self.x - 10, self.y, col.obj) < 1 then
-          self.x = self.x + (self.haxis * self.spd + 1)
+        if self.haxis <= -0.25 and mad:checkCol(self, self.x - 4, self.y, col.obj) < 1 then
+          self.x = self.x + (self.haxis * self.spd)
         end
-        if self.haxis >= 0.25 and mad:checkCol(self, self.x + 10, self.y, col.obj) < 1 then
-          self.x = self.x + (self.haxis * self.spd + 1)
+        if self.haxis >= 0.25 and mad:checkCol(self, self.x + 4, self.y, col.obj) < 1 then
+          self.x = self.x + (self.haxis * self.spd)
         end
-        if self.vaxis <= -0.25 and mad:checkCol(self, self.x, self.y - 10, col.obj) < 1 then
-          self.y = self.y + (self.vaxis * self.spd + 1)
+        if self.vaxis <= -0.25 and mad:checkCol(self, self.x, self.y - 4, col.obj) < 1 then
+          self.y = self.y + (self.vaxis * self.spd)
         end
-        if self.vaxis >= 0.25 and mad:checkCol(self, self.x, self.y + 10, col.obj) < 1 then
-          self.y = self.y + (self.vaxis * self.spd + 1)
+        if self.vaxis >= 0.25 and mad:checkCol(self, self.x, self.y + 4, col.obj) < 1 then
+          self.y = self.y + (self.vaxis * self.spd)
         end
       end
-      if mad.input:key("left") and mad:checkCol(self, self.x - 10, self.y, col.obj) < 1 then
+      if mad.input:key("left") and mad:checkCol(self, self.x - 4, self.y, col.obj) < 1 then
         self.x = self.x - self.spd
-      elseif mad.input:key("right") and mad:checkCol(self, self.x + 10, self.y, col.obj) < 1 then
+      elseif mad.input:key("right") and mad:checkCol(self, self.x + 4, self.y, col.obj) < 1 then
         self.x = self.x + self.spd
       end
-      if mad.input:key("up") and mad:checkCol(self, self.x, self.y - 10, col.obj) < 1 then
+      if mad.input:key("up") and mad:checkCol(self, self.x, self.y - 4, col.obj) < 1 then
         self.y = self.y - self.spd
-      elseif mad.input:key("down") and mad:checkCol(self, self.x, self.y + 10, col.obj) < 1 then
+      elseif mad.input:key("down") and mad:checkCol(self, self.x, self.y + 4, col.obj) < 1 then
         self.y = self.y + self.spd
       end
+      self.x = math.floor(self.x)
+      self.y = math.floor(self.y)
       self.x = mad.math.clamp(0, self.x, 400 - self.w)
       self.y = mad.math.clamp(0, self.y, 600 - self.h)
       return _parent_0.update(self, self)

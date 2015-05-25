@@ -36,9 +36,12 @@ export mad = {
 		for k, v in pairs ents
 			if v.update ~= nil then v\update(dt)
 	
+	--reorganizes the table based off of the ents' z value
+	drawSort: (a, b) ->
+		return a.z > b.z
 	--zordin' and drawin'
 	draw: =>
-		if not switch_room then table.sort(ents, drawSort)
+		if not switch_room then table.sort(ents, @drawSort)
 		for k, v in pairs ents
 			if v.draw ~= nil then v\draw!
 		--debuggin'
@@ -70,6 +73,9 @@ export mad = {
 					table.remove(ents, k)
 					if debug then print("removed ent", v)
 					entAmt -= 1
+
+		setMask: (e) =>
+			--DO THIS AND EDIT THE BOUNDING BOX FUNCTION TO MATCH!!!!!!!
 
 	--drawing and animating
 	sprite:
@@ -207,10 +213,6 @@ export mad = {
 		print("madlib is working for the polled object")
 
 }
-
---reorganizes the table based off of the ents' z value
-export drawSort = (a, b) ->
-	return a.z > b.z
 
 --base entity class; has some base functionality
 export class Entity

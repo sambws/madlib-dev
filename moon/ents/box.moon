@@ -2,7 +2,6 @@ export Box
 
 class Box extends Entity
 	new: (@xpos, @ypos) =>
-
 		--setup
 		super @xpos, @ypos
 		@w = 64
@@ -23,7 +22,6 @@ class Box extends Entity
 		mad\setCollisionGroup(self, col.player)
 
 	update: =>
-
 		--if there's a joystick connected...
 		if mad.input\joyConnected(1) then
 			--do some button stuff
@@ -45,25 +43,30 @@ class Box extends Entity
 			@vaxis = mad.input\joyAxis(@joy, 2)
 
 			--check for collisions and deadzones
-			if @haxis <= -0.25 and mad\checkCol(@, @x-10, @y, col.obj) < 1
-					@x += @haxis * @spd + 1
-			if @haxis >= 0.25 and mad\checkCol(@, @x+10, @y, col.obj) < 1 then
-				@x += @haxis * @spd + 1
+			if @haxis <= -0.25 and mad\checkCol(@, @x-4, @y, col.obj) < 1
+				@x += @haxis * @spd
+			if @haxis >= 0.25 and mad\checkCol(@, @x+4, @y, col.obj) < 1 then
+				@x += @haxis * @spd
+			if @vaxis <= -0.25 and mad\checkCol(@, @x, @y-4, col.obj) < 1
+				@y += @vaxis * @spd
+			if @vaxis >= 0.25 and mad\checkCol(@, @x, @y+4, col.obj) < 1
+				@y += @vaxis * @spd
 
-			if @vaxis <= -0.25 and mad\checkCol(@, @x, @y-10, col.obj) < 1
-				@y += @vaxis * @spd + 1
-			if @vaxis >= 0.25 and mad\checkCol(@, @x, @y+10, col.obj) < 1
-				@y += @vaxis * @spd + 1
-
-		if mad.input\key("left") and mad\checkCol(@, @x-10, @y, col.obj) < 1 then
+		--keyboart
+		if mad.input\key("left") and mad\checkCol(@, @x-4, @y, col.obj) < 1 then
 			@x -= @spd
-		elseif mad.input\key("right") and mad\checkCol(@, @x+10, @y, col.obj) < 1 then
+		elseif mad.input\key("right") and mad\checkCol(@, @x+4, @y, col.obj) < 1 then
 			@x += @spd
-		if mad.input\key("up") and mad\checkCol(@, @x, @y-10, col.obj) < 1 then
+		if mad.input\key("up") and mad\checkCol(@, @x, @y-4, col.obj) < 1 then
 			@y -= @spd
-		elseif mad.input\key("down") and mad\checkCol(@, @x, @y+10, col.obj) < 1 then
+		elseif mad.input\key("down") and mad\checkCol(@, @x, @y+4, col.obj) < 1 then
 			@y += @spd
 
+		--make the x/y values whole numbers
+		@x = math.floor(@x)
+		@y = math.floor(@y)
+
+		--safety
 		@x = mad.math.clamp(0, @x, 400 - @w)
 		@y = mad.math.clamp(0, @y, 600 - @h)
 

@@ -15,9 +15,12 @@ mad = {
       end
     end
   end,
+  drawSort = function(a, b)
+    return a.z > b.z
+  end,
   draw = function(self)
     if not switch_room then
-      table.sort(ents, drawSort)
+      table.sort(ents, self.drawSort)
     end
     for k, v in pairs(ents) do
       if v.draw ~= nil then
@@ -58,7 +61,8 @@ mad = {
           entAmt = entAmt - 1
         end
       end
-    end
+    end,
+    setMask = function(self, e) end
   },
   sprite = {
     img = function(self, p)
@@ -192,9 +196,6 @@ mad = {
     return print("madlib is working for the polled object")
   end
 }
-drawSort = function(a, b)
-  return a.z > b.z
-end
 do
   local _base_0 = {
     update = function(self, dt)

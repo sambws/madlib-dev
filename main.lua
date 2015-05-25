@@ -24,3 +24,4 @@ end
 love.draw = function()
   return mad:draw()
 end
+love.timer.sleep = function() end

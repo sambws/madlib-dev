@@ -19,6 +19,7 @@ class Example extends Entity
 		--define anims
 		@anim = mad.sprite\anim(@grid, '1-2', 1, 0.1)
 
+		--set the collision tag
 		mad\setCollisionGroup(self, col.obj)
 
 	update: (dt) =>
@@ -41,5 +42,5 @@ class Example extends Entity
 		super self
 
 	draw: =>
-		love.graphics.setColor(255, 255, 255, 255)
+		love.graphics.setColor(255, 0, 255, 255)
 		love.graphics.rectangle("fill", @x, @y, @w, @h)
