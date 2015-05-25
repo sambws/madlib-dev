@@ -180,26 +180,28 @@ export mad = {
 			dy = y1 - y2
 			return math.sqrt ( dx * dx + dy * dy )
 
+	col:
+		--will return how many objects of a given tag are within an object's boundingbox
+		colList: (s, x, y, colg) =>
+			list = {}
+			for k, v in pairs ents
+				if v.col == colg and v ~= s then
+					if @boundingBox(x, y, s, v) then
+						table.insert(list, v)
+			return list
+
+		--check if object is overlapping other object
+		boundingBox: (x, y, o, o2) =>
+			return x < o2.x+o2.w and o2.x < x+o.w and y < o2.y+o2.h and o2.y < y+o.h
+
+
 	--set col group for ent
 	setCollisionGroup: (o, g) =>
 		o.col = g
 
-	--will return how many objects of a given tag are within an object's boundingbox
-	colList: (s, x, y, colg) =>
-		list = {}
-		for k, v in pairs ents
-			if v.col == colg and v ~= s then
-				if @boundingBox(x, y, s, v) then
-					table.insert(list, v)
-		return list
-
 	--will automatically return the size of a colList
 	checkCol: (s, x, y, colg) =>
-		return self.getArraySize(@colList(s, x, y, colg))
-
-	--check if object is overlapping other object
-	boundingBox: (x, y, o, o2) =>
-		return x < o2.x+o2.w and o2.x < x+o.w and y < o2.y+o2.h and o2.y < y+o.h
+		return self.getArraySize(self.col\colList(s, x, y, colg))
 
 	--will return the amount of values in a given table
 	getArraySize: (tab) ->

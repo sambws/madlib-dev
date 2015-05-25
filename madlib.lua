@@ -165,25 +165,27 @@ mad = {
       return math.sqrt((dx * dx + dy * dy))
     end
   },
+  col = {
+    colList = function(self, s, x, y, colg)
+      local list = { }
+      for k, v in pairs(ents) do
+        if v.col == colg and v ~= s then
+          if self:boundingBox(x, y, s, v) then
+            table.insert(list, v)
+          end
+        end
+      end
+      return list
+    end,
+    boundingBox = function(self, x, y, o, o2)
+      return x < o2.x + o2.w and o2.x < x + o.w and y < o2.y + o2.h and o2.y < y + o.h
+    end
+  },
   setCollisionGroup = function(self, o, g)
     o.col = g
   end,
-  colList = function(self, s, x, y, colg)
-    local list = { }
-    for k, v in pairs(ents) do
-      if v.col == colg and v ~= s then
-        if self:boundingBox(x, y, s, v) then
-          table.insert(list, v)
-        end
-      end
-    end
-    return list
-  end,
   checkCol = function(self, s, x, y, colg)
-    return self.getArraySize(self:colList(s, x, y, colg))
-  end,
-  boundingBox = function(self, x, y, o, o2)
-    return x < o2.x + o2.w and o2.x < x + o.w and y < o2.y + o2.h and o2.y < y + o.h
+    return self.getArraySize(self.col:colList(s, x, y, colg))
   end,
   getArraySize = function(tab)
     local c = 0
