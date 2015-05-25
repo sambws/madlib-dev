@@ -1,10 +1,10 @@
 @ECHO OFF
-cd C:\Users\Sam\Documents\love\moonmadlib\moon
+cd C:\Users\Sam\Documents\love\madmoon\moon
 echo $$BUILD STARTING$$
-moonc -t C:\Users\Sam\Documents\love\moonmadlib *.moon
+moonc -t C:\Users\Sam\Documents\love\madmoon *.moon
 cd ents
-moonc -t C:\Users\Sam\Documents\love\moonmadlib\ents *.moon
+moonc -t C:\Users\Sam\Documents\love\madmoon\ents *.moon
 cd ..
 echo $$BUILD DONE$$
 cls
-love --console C:\Users\Sam\Documents\love\moonmadlib
+love --console C:\Users\Sam\Documents\love\madmoon

@@ -1,6 +1,7 @@
 require("libs.require")
-local anim8 = require("libs.anim8")
 require("libs.TEsound")
+camera = require("libs.camera")
+local anim8 = require("libs.anim8")
 joysticks = love.joystick.getJoysticks()
 debug = true
 room = ""
@@ -15,16 +16,22 @@ mad = {
       end
     end
   end,
-  drawSort = function(a, b)
-    return a.z > b.z
-  end,
-  draw = function(self)
-    if not switch_room then
-      table.sort(ents, self.drawSort)
+  draw = function(self, tab, cam)
+    cam = cam or nil
+    if tab == ents then
+      if not switch_room then
+        table.sort(tab, self.drawSort)
+      end
     end
-    for k, v in pairs(ents) do
+    for k, v in pairs(tab) do
       if v.draw ~= nil then
-        v:draw()
+        if cam then
+          cam:attach()
+          v:draw()
+          cam:detach()
+        else
+          v:draw()
+        end
       end
     end
     if debug then
@@ -33,6 +40,15 @@ mad = {
       return love.graphics.print("amount of entities: " .. entAmt, 16, 32)
     end
   end,
+  drawSort = function(a, b)
+    return a.z > b.z
+  end,
+  cam = {
+    look = function(self, cam, x, y)
+      local ox, oy = cam:cameraCoords(x, y)
+      return cam:lookAt(ox, oy)
+    end
+  },
   object = {
     addEnt = function(self, e)
       if e.new ~= nil then
@@ -185,9 +201,9 @@ mad = {
     o.col = g
   end,
   checkCol = function(self, s, x, y, colg)
-    return self.getArraySize(self.col:colList(s, x, y, colg))
+    return self.tableSize(self.col:colList(s, x, y, colg))
   end,
-  getArraySize = function(tab)
+  tableSize = function(tab)
     local c = 0
     for k, v in pairs((tab)) do
       c = c + 1

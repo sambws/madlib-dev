@@ -5,14 +5,19 @@ local room = {
   start = {
     name = "start",
     event = function(self)
-      mad.object:createEnt(Example(200, 200))
-      mad.object:createEnt(Example(200 - 32, 200))
-      mad.object:createEnt(Example(200 - 32, 200 - 32))
-      return mad.object:createEnt(Box(300, 300))
+      return loadLevel("start")
+    end
+  },
+  lair = {
+    name = "lair",
+    event = function(self)
+      return loadLevel("lair")
     end
   }
 }
 love.load = function()
+  cam = camera(0, 0, 1)
+  mad.cam:look(cam, 0, 0)
   return mad.room:switchRoom("start")
 end
 love.update = function(dt)
@@ -22,6 +27,6 @@ love.update = function(dt)
   end
 end
 love.draw = function()
-  return mad:draw()
+  return mad:draw(ents, cam)
 end
 love.timer.sleep = function() end

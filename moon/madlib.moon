@@ -1,6 +1,7 @@
 require "libs.require" --require help
-anim8 = require "libs.anim8" --animation
 require "libs.TEsound" --sound
+export camera = require "libs.camera" --camera
+anim8 = require "libs.anim8" --animation
 
 --WORKING
 	--persistance
@@ -30,26 +31,39 @@ export entAmt = 0
 export ents = {}
 export mad = {
 	--core functions
-	
-	--update all ents
 	update: (dt) =>
 		for k, v in pairs ents
 			if v.update ~= nil then v\update(dt)
-	
-	--reorganizes the table based off of the ents' z value
-	drawSort: (a, b) ->
-		return a.z > b.z
-	--zordin' and drawin'
-	draw: =>
-		if not switch_room then table.sort(ents, @drawSort)
-		for k, v in pairs ents
-			if v.draw ~= nil then v\draw!
+
+	--drawing. takes a table to draw and an optional camera to draw them to
+	draw: (tab, cam) =>
+		cam = cam or nil
+		if tab == ents then
+			if not switch_room then
+				table.sort(tab, @drawSort)
+		for k, v in pairs tab
+			if v.draw ~= nil then 
+				if cam then
+					cam\attach()
+					v\draw!
+					cam\detach()
+				else
+					v\draw!
 		--debuggin'
 		if debug then
 			love.graphics.setColor(255, 255, 255, 255)
 			love.graphics.print("FPS: " .. love.timer.getFPS(), 16, 16)
 			love.graphics.print("amount of entities: " .. entAmt, 16, 32)
 
+	--reorganizes the table based off of the ents' z value
+	drawSort: (a, b) ->
+		return a.z > b.z
+
+	--some random camera functions i guess
+	cam:
+		look: (cam, x, y) =>
+			ox, oy = cam\cameraCoords(x, y)
+			cam\lookAt(ox, oy)
 
 	--entities
 	object:
@@ -201,10 +215,10 @@ export mad = {
 
 	--will automatically return the size of a colList
 	checkCol: (s, x, y, colg) =>
-		return self.getArraySize(self.col\colList(s, x, y, colg))
+		return self.tableSize(self.col\colList(s, x, y, colg))
 
 	--will return the amount of values in a given table
-	getArraySize: (tab) ->
+	tableSize: (tab) ->
 		c = 0
 		for k, v in pairs (tab) do
 			c += 1

@@ -8,15 +8,22 @@ room = {
 	start: {
 		name: "start"
 		event: =>
-			mad.object\createEnt(Example(200, 200))
-			mad.object\createEnt(Example(200-32, 200))
-			mad.object\createEnt(Example(200-32, 200-32))
-			mad.object\createEnt(Box(300, 300))
+			loadLevel("start")
+	}
+	lair: {
+		name: "lair"
+		event: =>
+			loadLevel("lair")
 	}
 	--register other rooms here
 }
 
 love.load = ->
+	--setup camera
+	export cam = camera(0, 0, 1)
+	mad.cam\look(cam, 0, 0)
+
+	--switch the room
 	mad.room\switchRoom("start")
 
 love.update = (dt) ->
@@ -29,6 +36,6 @@ love.update = (dt) ->
 
 love.draw = ->
 	--draw all ents
-	mad\draw!
+	mad\draw(ents, cam)
 
 love.timer.sleep = ->
