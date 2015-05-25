@@ -35,6 +35,7 @@ export loadLevel = (filename) ->
 	--create blocks
 	blocks = tonumber(file\read("*line"))
 	for i=1, blocks
+		_n = tonumber(file\read("*line"))
 		_x = tonumber(file\read("*line"))
 		_y = tonumber(file\read("*line"))
 		mad.object\createEnt(Example(_x, _y))

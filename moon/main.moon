@@ -15,6 +15,11 @@ room = {
 		event: =>
 			loadLevel("lair")
 	}
+	ok: {
+		name: "ok"
+		event: =>
+			loadLevel("hoes")
+	}
 	--register other rooms here
 }
 
@@ -24,7 +29,7 @@ love.load = ->
 	mad.cam\look(cam, 0, 0)
 
 	--switch the room
-	mad.room\switchRoom("start")
+	mad.room\switchRoom("ok")
 
 love.update = (dt) ->
 	--update all ents
