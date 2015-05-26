@@ -16,7 +16,9 @@ export camera = require "lib.camera" --camera
 	--super super basic editor; needs expanding
 --TODO
 	--work on the editor
+	--tiled support so i don't have a billion wall entities in one scene
 	--optimize functions so they don't all use fat arrows (i'm a dumbass)
+	--make a branch that uses gamera instead of hump.camera to see if it's more intuitive (would have to heavily rework draw())
 	--spend 400 hours organizing this mess
 	--in-game debug console???
 
@@ -24,7 +26,7 @@ export camera = require "lib.camera" --camera
 export joysticks = love.joystick.getJoysticks()
 
 --debug mode
-export debug = true
+export debug = false
 
 --rooms
 export room = ""
@@ -35,6 +37,7 @@ export entAmt = 0
 export ents = {}
 export gui = {}
 export mad = {
+
 	--will update both gui and ent tables
 	update: (dt) =>
 		for k, v in pairs ents

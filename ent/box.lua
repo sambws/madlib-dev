@@ -45,8 +45,8 @@ do
       end
       self.x = math.floor(self.x)
       self.y = math.floor(self.y)
-      self.x = mad.math.clamp(0, self.x, 400 - self.w)
-      self.y = mad.math.clamp(0, self.y, 600 - self.h)
+      self.x = mad.math.clamp(0, self.x, 416 - self.w)
+      self.y = mad.math.clamp(0, self.y, 608 - self.h)
       return _parent_0.update(self, self)
     end,
     draw = function(self)

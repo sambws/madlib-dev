@@ -23,6 +23,13 @@ local room = {
   }
 }
 love.load = function()
+  mad.setWindow({
+    w = 1920,
+    h = 1080,
+    full = false,
+    vsync = false,
+    aa = 0
+  }, 416, false, false)
   cam = camera(0, 0, 1)
   mad.cam:look(cam, 0, 0)
   return mad.room:switchRoom("ok")

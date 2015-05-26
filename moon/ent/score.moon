@@ -10,4 +10,4 @@ class Score extends Entity
 
 	draw: =>
 		love.graphics.setColor(0, 255, 255, 255)
-		love.graphics.print("hey fucko", @x, @y)
+		love.graphics.print("hoy", @x, @y)

@@ -3,7 +3,7 @@ require("lib.TEsound")
 local anim8 = require("lib.anim8")
 camera = require("lib.camera")
 joysticks = love.joystick.getJoysticks()
-debug = true
+debug = false
 room = ""
 switch_room = false
 entAmt = 0

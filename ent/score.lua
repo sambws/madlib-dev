@@ -4,7 +4,7 @@ do
     update = function(self, dt) end,
     draw = function(self)
       love.graphics.setColor(0, 255, 255, 255)
-      return love.graphics.print("hey fucko", self.x, self.y)
+      return love.graphics.print("hoy", self.x, self.y)
     end
   }
   _base_0.__index = _base_0
