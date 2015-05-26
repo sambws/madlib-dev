@@ -8,9 +8,15 @@ room = ""
 switch_room = false
 entAmt = 0
 ents = { }
+gui = { }
 mad = {
   update = function(self, dt)
     for k, v in pairs(ents) do
+      if v.update ~= nil then
+        v:update(dt)
+      end
+    end
+    for k, v in pairs(gui) do
       if v.update ~= nil then
         v:update(dt)
       end
@@ -63,6 +69,16 @@ mad = {
     createEnt = function(self, e)
       local a = e
       return self:addEnt(a)
+    end,
+    createGUI = function(self, e)
+      local a = e
+      if e.new ~= nil then
+        e:new()
+      end
+      table.insert(gui, e)
+      if debug then
+        return print("created gui ", e)
+      end
     end,
     removeEnt = function(self, e)
       for k, v in pairs(ents) do

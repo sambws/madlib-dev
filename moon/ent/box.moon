@@ -66,8 +66,6 @@ class Box extends Entity
 		@x = math.floor(@x)
 		@y = math.floor(@y)
 
-		print(@x, @y)
-
 		--safety
 		@x = mad.math.clamp(0, @x, 400 - @w)
 		@y = mad.math.clamp(0, @y, 600 - @h)

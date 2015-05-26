@@ -17,12 +17,13 @@ local room = {
   ok = {
     name = "ok",
     event = function(self)
-      return loadLevel("ok")
+      loadLevel("nice")
+      return mad.object:createGUI(Score(0, 0))
     end
   }
 }
 love.load = function()
-  cam = camera(0, 0, 1)
+  cam = camera(0, 0, 2)
   mad.cam:look(cam, 0, 0)
   return mad.room:switchRoom("ok")
 end
@@ -33,6 +34,7 @@ love.update = function(dt)
   end
 end
 love.draw = function()
-  return mad:draw(ents, cam)
+  mad:draw(ents, cam)
+  return mad:draw(gui)
 end
 love.timer.sleep = function() end

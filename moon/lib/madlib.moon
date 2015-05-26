@@ -33,10 +33,13 @@ export switch_room = false
 --lib
 export entAmt = 0
 export ents = {}
+export gui = {}
 export mad = {
-	--core functions
+	--will update both gui and ent tables
 	update: (dt) =>
 		for k, v in pairs ents
+			if v.update ~= nil then v\update(dt)
+		for k, v in pairs gui
 			if v.update ~= nil then v\update(dt)
 
 	--drawing. takes a table to draw and an optional camera to draw them to
@@ -82,6 +85,13 @@ export mad = {
 		createEnt: (e) =>
 			a = e
 			@addEnt(a)
+
+		--inserts an object into the gui table
+		createGUI: (e) =>
+			a = e
+			if e.new ~= nil then e\new()
+			table.insert(gui, e)
+			if debug then print("created gui ", e)
 
 		--weird and probably doensn't work
 		removeEnt: (e) =>

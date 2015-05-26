@@ -18,7 +18,8 @@ room = {
 	ok: {
 		name: "ok"
 		event: =>
-			loadLevel("ok")
+			loadLevel("nice")
+			mad.object\createGUI(Score(0, 0))
 	}
 	--register other rooms here
 }
@@ -42,5 +43,6 @@ love.update = (dt) ->
 love.draw = ->
 	--draw all ents
 	mad\draw(ents, cam)
+	mad\draw(gui)
 
 love.timer.sleep = ->

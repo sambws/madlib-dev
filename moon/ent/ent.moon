@@ -14,10 +14,10 @@ class Example extends Entity
 		@vsp = 2
 
 		--sprite
-		@sprite, @grid = mad.sprite\gImg('cool.png', 32, 32)
+		@sprite = mad.sprite\img("hapy.png")
 
 		--define anims
-		@anim = mad.sprite\anim(@grid, '1-2', 1, 0.1)
+		--@anim = mad.sprite\anim(@grid, '1-2', 1, 0.1)
 
 		--set the collision tag
 		mad\setCollisionGroup(self, col.obj)
@@ -42,5 +42,6 @@ class Example extends Entity
 		super self
 
 	draw: =>
-		love.graphics.setColor(255, 0, 255, 255)
-		love.graphics.rectangle("fill", @x, @y, @w, @h)
+		love.graphics.setColor(255, 255, 255, 255)
+		--love.graphics.rectangle("fill", @x, @y, @w, @h)
+		love.graphics.draw(@sprite, @x, @y)
