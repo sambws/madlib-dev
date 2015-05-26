@@ -1,7 +1,8 @@
-require "libs.require" --require help
-require "libs.TEsound" --sound
-anim8 = require "libs.anim8" --animation
-export camera = require "libs.camera" --camera
+--require all our bullshit
+require "lib.require"
+require "lib.TEsound" --sound
+anim8 = require "lib.anim8" --animation
+export camera = require "lib.camera" --camera
 
 --WORKING
 	--room system/persistence
@@ -12,9 +13,10 @@ export camera = require "libs.camera" --camera
 	--basic collision functions
 	--camera
 	--really basic map reader
+	--super super basic editor; needs expanding
 --TODO
+	--work on the editor
 	--optimize functions so they don't all use fat arrows (i'm a dumbass)
-	--official™ cool™ level™ editor™
 	--spend 400 hours organizing this mess
 	--in-game debug console???
 
@@ -165,7 +167,7 @@ export mad = {
 			if switch_room
 				if room == r
 					func!
-					if debug then print("finished creating " .. r .. " objects for " .. room)
+					if debug then print("finished creating objects for " .. room)
 					switch_room = false
 
 	--sound functionality

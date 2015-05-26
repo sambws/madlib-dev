@@ -55,9 +55,9 @@ class Box extends Entity
 		--keyboart
 		if mad.input\key("left") and mad\checkCol(@, @x-4, @y, col.obj) < 1 then
 			@x -= @spd
-		elseif mad.input\key("right") and mad\checkCol(@, @x+4, @y, col.obj) < 1 then
+		elseif mad.input\key("right") and not mad.input\key("left") and mad\checkCol(@, @x+4, @y, col.obj) < 1 then
 			@x += @spd
-		if mad.input\key("up") and mad\checkCol(@, @x, @y-4, col.obj) < 1 then
+		if mad.input\key("up") and not mad.input\key("down") and mad\checkCol(@, @x, @y-4, col.obj) < 1 then
 			@y -= @spd
 		elseif mad.input\key("down") and mad\checkCol(@, @x, @y+4, col.obj) < 1 then
 			@y += @spd
@@ -65,6 +65,8 @@ class Box extends Entity
 		--make the x/y values whole numbers
 		@x = math.floor(@x)
 		@y = math.floor(@y)
+
+		print(@x, @y)
 
 		--safety
 		@x = mad.math.clamp(0, @x, 400 - @w)

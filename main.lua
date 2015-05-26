@@ -1,6 +1,6 @@
-require("madlib")
+require("lib.madlib")
 require("reg")
-require.tree("ents")
+require.tree("ent")
 local room = {
   start = {
     name = "start",
@@ -17,7 +17,7 @@ local room = {
   ok = {
     name = "ok",
     event = function(self)
-      return loadLevel("hoes")
+      return loadLevel("ok")
     end
   }
 }

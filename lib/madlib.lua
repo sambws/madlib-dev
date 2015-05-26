@@ -1,7 +1,7 @@
-require("libs.require")
-require("libs.TEsound")
-local anim8 = require("libs.anim8")
-camera = require("libs.camera")
+require("lib.require")
+require("lib.TEsound")
+local anim8 = require("lib.anim8")
+camera = require("lib.camera")
 joysticks = love.joystick.getJoysticks()
 debug = true
 room = ""
@@ -148,7 +148,7 @@ mad = {
         if room == r then
           func()
           if debug then
-            print("finished creating " .. r .. " objects for " .. room)
+            print("finished creating objects for " .. room)
           end
           switch_room = false
         end

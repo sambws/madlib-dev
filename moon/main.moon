@@ -1,7 +1,7 @@
 --stuff to require; madlib, data registry, entities
-require "madlib"
+require "lib.madlib"
 require "reg"
-require.tree "ents"
+require.tree "ent"
 
 --room registry
 room = {
@@ -18,7 +18,7 @@ room = {
 	ok: {
 		name: "ok"
 		event: =>
-			loadLevel("hoes")
+			loadLevel("ok")
 	}
 	--register other rooms here
 }
