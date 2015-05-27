@@ -2,22 +2,14 @@ do
   local _parent_0 = Entity
   local _base_0 = {
     update = function(self, dt)
-      if self.x >= (400 - self.w) then
-        self.hsp = -self.hsp
-      elseif self.x <= 0 then
-        self.hsp = -self.hsp
+      if mad.input:key("z") then
+        if not self.pressed then
+          mad.room:switchRoom("donkey")
+          self.pressed = true
+        end
       end
-      if self.y >= (600 - self.h) then
-        self.vsp = -self.vsp
-      elseif self.y <= 0 then
-        self.vsp = -self.vsp
-      end
-      return _parent_0.update(self, self)
     end,
-    draw = function(self)
-      love.graphics.setColor(255, 255, 255, 255)
-      return love.graphics.draw(self.sprite, self.x, self.y)
-    end
+    draw = function(self) end
   }
   _base_0.__index = _base_0
   setmetatable(_base_0, _parent_0.__base)
@@ -25,16 +17,13 @@ do
     __init = function(self, xpos, ypos)
       self.xpos, self.ypos = xpos, ypos
       _parent_0.__init(self, self.xpos, self.ypos)
-      self.w = 32
-      self.h = 32
-      self.hsp = 2
-      self.vsp = 2
-      self.sprite = mad.sprite:img("hapy.png")
-      self.persistent = false
-      return mad:setCollisionGroup(self, col.obj)
+      self.w = love.graphics.getWidth()
+      self.h = love.graphics.getHeight()
+      self.pressed = false
+      self.persistent = true
     end,
     __base = _base_0,
-    __name = "Example",
+    __name = "Background",
     __parent = _parent_0
   }, {
     __index = function(cls, name)
@@ -55,6 +44,6 @@ do
   if _parent_0.__inherited then
     _parent_0.__inherited(_parent_0, _class_0)
   end
-  Example = _class_0
+  Background = _class_0
   return _class_0
 end

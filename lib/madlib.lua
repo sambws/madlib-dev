@@ -3,7 +3,7 @@ require("lib.TEsound")
 local anim8 = require("lib.anim8")
 camera = require("lib.camera")
 joysticks = love.joystick.getJoysticks()
-debug = false
+debug = true
 room = ""
 switch_room = false
 entAmt = 0
@@ -41,7 +41,7 @@ mad = {
       end
     end
     if debug then
-      love.graphics.setColor(255, 255, 255, 255)
+      love.graphics.setColor(0, 0, 0, 255)
       love.graphics.print("FPS: " .. love.timer.getFPS(), 16, 16)
       return love.graphics.print("amount of entities: " .. entAmt, 16, 32)
     end
@@ -57,10 +57,10 @@ mad = {
   },
   object = {
     addEnt = function(self, e)
+      table.insert(ents, e)
       if e.new ~= nil then
         e:new()
       end
-      table.insert(ents, e)
       entAmt = entAmt + 1
       if debug then
         return print("created ent ", e)
@@ -86,15 +86,14 @@ mad = {
           if v.destroy ~= nil then
             e:destroy()
           end
-          table.remove(ents, k)
+          entAmt = entAmt - 1
+          ents[k] = nil
           if debug then
             print("removed ent", v)
           end
-          entAmt = entAmt - 1
         end
       end
-    end,
-    setMask = function(self, e) end
+    end
   },
   sprite = {
     img = function(self, p)
@@ -148,12 +147,16 @@ mad = {
   },
   room = {
     switchRoom = function(self, r)
-      room = r
-      for k, v in pairs(ents) do
-        if not v.pers then
-          self:removeEnt(v)
+      for k, v in pairs((ents)) do
+        if v.persistent == false then
+          mad.object:removeEnt(v)
+        else
+          if debug then
+            print(v, "is persistent")
+          end
         end
       end
+      room = r
       switch_room = true
       if debug then
         return print("switched room to " .. r)
@@ -217,14 +220,7 @@ mad = {
     o.col = g
   end,
   checkCol = function(self, s, x, y, colg)
-    return self.tableSize(self.col:colList(s, x, y, colg))
-  end,
-  tableSize = function(tab)
-    local c = 0
-    for k, v in pairs((tab)) do
-      c = c + 1
-    end
-    return c
+    return #self.col:colList(s, x, y, colg)
   end,
   test = function(self)
     return print("madlib is working for the polled object")

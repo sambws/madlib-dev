@@ -18,6 +18,8 @@ class Box extends Entity
 		--joy var
 		@joy = joystick
 
+		@persistent = false
+
 		--set group for collision
 		mad\setCollisionGroup(self, col.player)
 

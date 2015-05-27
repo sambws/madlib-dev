@@ -5,27 +5,21 @@ local room = {
   start = {
     name = "start",
     event = function(self)
-      return loadLevel("start")
+      loadLevel("test")
+      return mad.object:createEnt(Background(0, 0))
     end
   },
-  lair = {
-    name = "lair",
+  donkey = {
+    name = "donkey",
     event = function(self)
-      return loadLevel("lair")
-    end
-  },
-  ok = {
-    name = "ok",
-    event = function(self)
-      loadLevel("nice")
-      return mad.object:createGUI(Score(0, 0))
+      return loadLevel("othertest")
     end
   }
 }
 love.load = function()
   cam = camera(0, 0, 1)
   mad.cam:look(cam, 0, 0)
-  return mad.room:switchRoom("ok")
+  return mad.room:switchRoom("start")
 end
 love.update = function(dt)
   mad:update(dt)

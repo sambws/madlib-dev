@@ -1,4 +1,3 @@
---require all our bullshit
 require "lib.require"
 require "lib.TEsound" --sound
 anim8 = require "lib.anim8" --animation
@@ -12,12 +11,11 @@ export camera = require "lib.camera" --camera
 	--zording
 	--basic collision functions
 	--camera
-	--really basic map reader
-	--super super basic editor; needs expanding
+	--really basic entity mapper
 --TODO
-	--work on the editor
-	--tiled support so i don't have a billion wall entities in one scene
+	--work on the entity mapper
 	--optimize functions so they don't all use fat arrows (i'm a dumbass)
+	--STI STI STI STI!!!!!!!
 	--make a branch that uses gamera instead of hump.camera to see if it's more intuitive (would have to heavily rework draw())
 	--spend 400 hours organizing this mess
 	--in-game debug console???
@@ -26,7 +24,7 @@ export camera = require "lib.camera" --camera
 export joysticks = love.joystick.getJoysticks()
 
 --debug mode
-export debug = false
+export debug = true
 
 --rooms
 export room = ""
@@ -48,9 +46,11 @@ export mad = {
 	--drawing. takes a table to draw and an optional camera to draw them to
 	draw: (tab, cam) =>
 		cam = cam or nil
+		--zorder them up
 		if tab == ents then
 			if not switch_room then
 				table.sort(tab, @drawSort)
+		--draw em
 		for k, v in pairs tab
 			if v.draw ~= nil then 
 				if cam then
@@ -61,7 +61,7 @@ export mad = {
 					v\draw!
 		--debuggin'
 		if debug then
-			love.graphics.setColor(255, 255, 255, 255)
+			love.graphics.setColor(0, 0, 0, 255)
 			love.graphics.print("FPS: " .. love.timer.getFPS(), 16, 16)
 			love.graphics.print("amount of entities: " .. entAmt, 16, 32)
 
@@ -79,9 +79,10 @@ export mad = {
 	object:
 		--run entity's new function and then add it to the ent table
 		addEnt: (e) =>
-			if e.new ~= nil then e\new()
 			table.insert(ents, e)
+			if e.new ~= nil then e\new()
 			entAmt += 1
+
 			if debug then print("created ent ", e)
 
 		--will put a new class into the game
@@ -100,13 +101,15 @@ export mad = {
 		removeEnt: (e) =>
 			for k, v in pairs ents
 				if v == e then
+					--run actions
 					if v.destroy ~= nil then e\destroy()
-					table.remove(ents, k)
-					if debug then print("removed ent", v)
 					entAmt -= 1
 
-		setMask: (e) =>
-			--DO THIS AND EDIT THE BOUNDING BOX FUNCTION TO MATCH!!!!!!!
+					--make the entity nil
+					ents[k] = nil
+
+					--debug
+					if debug then print("removed ent", v)
 
 	--drawing and animating
 	sprite:
@@ -169,9 +172,12 @@ export mad = {
 	room:
 		--set room; delete non-persistent entities
 		switchRoom: (r) =>
+			for k, v in pairs (ents)
+    			if v.persistent == false
+    				mad.object\removeEnt(v)
+    			else
+    				if debug then print(v, "is persistent")
 			room = r
-			for k, v in pairs ents
-				if not v.pers then @removeEnt(v)
 			switch_room = true
 			if debug then print("switched room to " .. r)
 
@@ -232,14 +238,7 @@ export mad = {
 
 	--will automatically return the size of a colList
 	checkCol: (s, x, y, colg) =>
-		return self.tableSize(self.col\colList(s, x, y, colg))
-
-	--will return the amount of values in a given table
-	tableSize: (tab) ->
-		c = 0
-		for k, v in pairs (tab) do
-			c += 1
-		return c
+		return #self.col\colList(s, x, y, colg)
 
 	--kinda useless; polls object to see if it can access this lib			
 	test: =>

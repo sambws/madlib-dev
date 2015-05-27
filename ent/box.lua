@@ -67,6 +67,7 @@ do
       self.b = 0
       self.g = 0
       self.joy = joystick
+      self.persistent = false
       return mad:setCollisionGroup(self, col.player)
     end,
     __base = _base_0,

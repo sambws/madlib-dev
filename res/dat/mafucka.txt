@@ -1,0 +1,1 @@
+mad.object:createEnt(Example(32,0))

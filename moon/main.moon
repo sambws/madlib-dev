@@ -8,18 +8,13 @@ room = {
 	start: {
 		name: "start"
 		event: =>
-			loadLevel("start")
+			loadLevel("test")
+			mad.object\createEnt(Background(0, 0))
 	}
-	lair: {
-		name: "lair"
+	donkey: {
+		name: "donkey"
 		event: =>
-			loadLevel("lair")
-	}
-	ok: {
-		name: "ok"
-		event: =>
-			loadLevel("nice")
-			mad.object\createGUI(Score(0, 0))
+			loadLevel("othertest")
 	}
 	--register other rooms here
 }
@@ -30,7 +25,7 @@ love.load = ->
 	mad.cam\look(cam, 0, 0)
 
 	--switch the room
-	mad.room\switchRoom("ok")
+	mad.room\switchRoom("start")
 
 love.update = (dt) ->
 	--update all ents
