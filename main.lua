@@ -1,7 +1,7 @@
 require("lib.madlib")
 require("reg")
 require.tree("ent")
-local room = {
+room_reg = {
   start = {
     name = "start",
     event = function(self)
@@ -17,15 +17,11 @@ local room = {
   }
 }
 love.load = function()
-  cam = camera(0, 0, 1)
-  mad.cam:look(cam, 0, 0)
+  mad:init()
   return mad.room:switchRoom("start")
 end
 love.update = function(dt)
-  mad:update(dt)
-  for k, v in pairs(room) do
-    mad.room:runRoom(v.name, v.event)
-  end
+  return mad:update(dt)
 end
 love.draw = function()
   mad:draw(ents, cam)

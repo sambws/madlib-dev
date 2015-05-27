@@ -4,7 +4,7 @@ require "reg"
 require.tree "ent"
 
 --room registry
-room = {
+export room_reg = {
 	start: {
 		name: "start"
 		event: =>
@@ -20,9 +20,7 @@ room = {
 }
 
 love.load = ->
-	--setup camera
-	export cam = camera(0, 0, 1)
-	mad.cam\look(cam, 0, 0)
+	mad\init!
 
 	--switch the room
 	mad.room\switchRoom("start")
@@ -30,10 +28,6 @@ love.load = ->
 love.update = (dt) ->
 	--update all ents
 	mad\update(dt)
-
-	--run all room code
-	for k, v in pairs room
-		mad.room\runRoom(v.name, v.event)
 
 love.draw = ->
 	--draw all ents

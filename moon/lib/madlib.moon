@@ -1,3 +1,6 @@
+--madlib
+--requires everything in the lib folder, is required by main.moon
+
 require "lib.require"
 require "lib.TEsound" --sound
 anim8 = require "lib.anim8" --animation
@@ -13,6 +16,7 @@ export camera = require "lib.camera" --camera
 	--camera
 	--really basic entity mapper
 --TODO
+	--organize
 	--work on the entity mapper
 	--optimize functions so they don't all use fat arrows (i'm a dumbass)
 	--STI STI STI STI!!!!!!!
@@ -36,15 +40,27 @@ export ents = {}
 export gui = {}
 export mad = {
 
+	--startup
+	init: =>
+		--setup camera
+		export cam = camera(0, 0, 1)
+		mad.cam\look(cam, 0, 0)
+
 	--will update both gui and ent tables
 	update: (dt) =>
+		--ent code
 		for k, v in pairs ents
 			if v.update ~= nil then v\update(dt)
+		--gui code
 		for k, v in pairs gui
 			if v.update ~= nil then v\update(dt)
+		--run all room code
+		for k, v in pairs room_reg
+			mad.room\runRoom(v.name, v.event)
 
 	--drawing. takes a table to draw and an optional camera to draw them to
 	draw: (tab, cam) =>
+		--is there a camera?
 		cam = cam or nil
 		--zorder them up
 		if tab == ents then
@@ -61,7 +77,7 @@ export mad = {
 					v\draw!
 		--debuggin'
 		if debug then
-			love.graphics.setColor(0, 0, 0, 255)
+			love.graphics.setColor(255, 255, 255, 255)
 			love.graphics.print("FPS: " .. love.timer.getFPS(), 16, 16)
 			love.graphics.print("amount of entities: " .. entAmt, 16, 32)
 
@@ -87,8 +103,7 @@ export mad = {
 
 		--will put a new class into the game
 		createEnt: (e) =>
-			a = e
-			@addEnt(a)
+			@addEnt(e)
 
 		--inserts an object into the gui table
 		createGUI: (e) =>
@@ -170,13 +185,15 @@ export mad = {
 
 	--rooms
 	room:
-		--set room; delete non-persistent entities
+		--set room
 		switchRoom: (r) =>
+			--delete everything non-persistent
 			for k, v in pairs (ents)
     			if v.persistent == false
     				mad.object\removeEnt(v)
     			else
     				if debug then print(v, "is persistent")
+    		--set room; run code
 			room = r
 			switch_room = true
 			if debug then print("switched room to " .. r)
@@ -252,5 +269,6 @@ export class Entity
 		@x = @xpos
 		@y = @ypos
 		@z = -@ypos
+		@persistent = false
 	update: (dt) =>
 		mad.sprite\zord(self)

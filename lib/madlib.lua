@@ -10,6 +10,10 @@ entAmt = 0
 ents = { }
 gui = { }
 mad = {
+  init = function(self)
+    cam = camera(0, 0, 1)
+    return mad.cam:look(cam, 0, 0)
+  end,
   update = function(self, dt)
     for k, v in pairs(ents) do
       if v.update ~= nil then
@@ -20,6 +24,9 @@ mad = {
       if v.update ~= nil then
         v:update(dt)
       end
+    end
+    for k, v in pairs(room_reg) do
+      mad.room:runRoom(v.name, v.event)
     end
   end,
   draw = function(self, tab, cam)
@@ -41,7 +48,7 @@ mad = {
       end
     end
     if debug then
-      love.graphics.setColor(0, 0, 0, 255)
+      love.graphics.setColor(255, 255, 255, 255)
       love.graphics.print("FPS: " .. love.timer.getFPS(), 16, 16)
       return love.graphics.print("amount of entities: " .. entAmt, 16, 32)
     end
@@ -67,8 +74,7 @@ mad = {
       end
     end,
     createEnt = function(self, e)
-      local a = e
-      return self:addEnt(a)
+      return self:addEnt(e)
     end,
     createGUI = function(self, e)
       local a = e
@@ -239,6 +245,7 @@ do
       self.x = self.xpos
       self.y = self.ypos
       self.z = -self.ypos
+      self.persistent = false
     end,
     __base = _base_0,
     __name = "Entity"
