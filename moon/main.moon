@@ -10,6 +10,7 @@ export room_reg = {
 		event: =>
 			loadLevel("test")
 			mad.object\createEnt(Background(0, 0))
+			mad.object\createEnt(Thing(0, 0))
 	}
 	donkey: {
 		name: "donkey"
@@ -20,6 +21,7 @@ export room_reg = {
 }
 
 love.load = ->
+	--init stuff
 	mad\init!
 
 	--switch the room

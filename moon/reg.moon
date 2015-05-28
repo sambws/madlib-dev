@@ -2,10 +2,9 @@
 --any entity can aquire these things, and the file itself is required from main.moon
 
 export col, path
-export joystick
 
 --set up controllers here
-joystick = joysticks[1]
+export joystick = joysticks[1]
 
 --collision groups
 col = {

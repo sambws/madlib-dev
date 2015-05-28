@@ -6,7 +6,8 @@ room_reg = {
     name = "start",
     event = function(self)
       loadLevel("test")
-      return mad.object:createEnt(Background(0, 0))
+      mad.object:createEnt(Background(0, 0))
+      return mad.object:createEnt(Thing(0, 0))
     end
   },
   donkey = {

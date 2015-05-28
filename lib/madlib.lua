@@ -56,12 +56,6 @@ mad = {
   drawSort = function(a, b)
     return a.z > b.z
   end,
-  cam = {
-    look = function(self, cam, x, y)
-      local ox, oy = cam:cameraCoords(x, y)
-      return cam:lookAt(ox, oy)
-    end
-  },
   object = {
     addEnt = function(self, e)
       table.insert(ents, e)
@@ -129,10 +123,6 @@ mad = {
         return false
       end
     end,
-    getControllers = function(self)
-      local a = love.joystick.getJoysticks()
-      return a
-    end,
     joyButton = function(self, c, b)
       if c:isGamepadDown(b) then
         return true
@@ -149,6 +139,10 @@ mad = {
       else
         return false
       end
+    end,
+    getControllers = function(self)
+      local a = love.joystick.getJoysticks()
+      return a
     end
   },
   room = {
@@ -193,17 +187,18 @@ mad = {
       return TEsound.playLooping(path.snd .. sound, tags, n, v, p)
     end
   },
+  cam = {
+    look = function(self, cam, x, y)
+      local ox, oy = cam:cameraCoords(x, y)
+      return cam:lookAt(ox, oy)
+    end
+  },
   math = {
     clamp = function(low, n, high)
       return math.min(math.max(low, n), high)
     end,
     lerp = function(a, b, t)
       return (1 - t) * a + t * b
-    end,
-    distance = function(x1, y1, x2, y2)
-      local dx = x1 - x2
-      local dy = y1 - y2
-      return math.sqrt((dx * dx + dy * dy))
     end
   },
   col = {
@@ -220,13 +215,13 @@ mad = {
     end,
     boundingBox = function(self, x, y, o, o2)
       return x < o2.x + o2.w and o2.x < x + o.w and y < o2.y + o2.h and o2.y < y + o.h
+    end,
+    checkCol = function(self, s, x, y, colg)
+      return #self:colList(s, x, y, colg)
     end
   },
   setCollisionGroup = function(self, o, g)
     o.col = g
-  end,
-  checkCol = function(self, s, x, y, colg)
-    return #self.col:colList(s, x, y, colg)
   end,
   test = function(self)
     return print("madlib is working for the polled object")

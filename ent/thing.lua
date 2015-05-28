@@ -1,8 +1,25 @@
 do
   local _parent_0 = Entity
   local _base_0 = {
+    update = function(self, dt)
+      if mad.col:checkCol(self, self.x, self.y, col.obj) > 0 then
+        print("cool")
+      end
+      if mad.input:key("left") then
+        self.x = self.x - 2
+      end
+      if mad.input:key("right") then
+        self.x = self.x + 2
+      end
+      if mad.input:key("up") then
+        self.y = self.y - 2
+      end
+      if mad.input:key("down") then
+        self.y = self.y + 2
+      end
+    end,
     draw = function(self)
-      love.graphics.setColor(255, 255, 255, 255)
+      love.graphics.setColor(0, 0, 255, 255)
       return love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
     end
   }
@@ -14,10 +31,10 @@ do
       _parent_0.__init(self, self.xpos, self.ypos)
       self.w = 32
       self.h = 32
-      return mad:setCollisionGroup(self, col.obj)
+      return mad:setCollisionGroup(self, col.player)
     end,
     __base = _base_0,
-    __name = "Wall",
+    __name = "Thing",
     __parent = _parent_0
   }, {
     __index = function(cls, name)
@@ -38,6 +55,6 @@ do
   if _parent_0.__inherited then
     _parent_0.__inherited(_parent_0, _class_0)
   end
-  Wall = _class_0
+  Thing = _class_0
   return _class_0
 end

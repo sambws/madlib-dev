@@ -16,7 +16,7 @@ export camera = require "lib.camera" --camera
 	--camera
 	--really basic entity mapper
 --TODO
-	--organize
+	--improve argument names for functions
 	--work on the entity mapper
 	--optimize functions so they don't all use fat arrows (i'm a dumbass)
 	--STI STI STI STI!!!!!!!
@@ -84,12 +84,6 @@ export mad = {
 	--reorganizes the table based off of the ents' z value
 	drawSort: (a, b) ->
 		return a.z > b.z
-
-	--some random camera functions i guess
-	cam:
-		look: (cam, x, y) =>
-			ox, oy = cam\cameraCoords(x, y)
-			cam\lookAt(ox, oy)
 
 	--entities
 	object:
@@ -160,11 +154,6 @@ export mad = {
 			else
 				return false
 
-		--get controller list
-		getControllers: =>
-			a = love.joystick.getJoysticks()
-			return a
-
 		--get gamepad button down
 		joyButton: (c, b) =>
 			if c\isGamepadDown(b) then
@@ -182,6 +171,11 @@ export mad = {
 				return true
 			else
 				return false
+
+		--get controller list
+		getControllers: =>
+			a = love.joystick.getJoysticks()
+			return a
 
 	--rooms
 	room:
@@ -221,6 +215,12 @@ export mad = {
 			n = n or nil
 			TEsound.playLooping(path.snd .. sound, tags, n, v, p)
 
+	--some random camera functions i guess
+	cam:
+		look: (cam, x, y) =>
+			ox, oy = cam\cameraCoords(x, y)
+			cam\lookAt(ox, oy)
+
 	--math stuff
 	math:
 		clamp: (low, n, high) ->
@@ -228,11 +228,6 @@ export mad = {
 			
 		lerp: (a,b,t) ->
 			return (1-t)*a + t*b
-
-		distance: ( x1, y1, x2, y2 ) ->
-			dx = x1 - x2
-			dy = y1 - y2
-			return math.sqrt ( dx * dx + dy * dy )
 
 	col:
 		--will return how many objects of a given tag are within an object's boundingbox
@@ -248,14 +243,14 @@ export mad = {
 		boundingBox: (x, y, o, o2) =>
 			return x < o2.x+o2.w and o2.x < x+o.w and y < o2.y+o2.h and o2.y < y+o.h
 
+		--will automatically return the size of a colList
+		checkCol: (s, x, y, colg) =>
+			return #@colList(s, x, y, colg)
+
 
 	--set col group for ent
 	setCollisionGroup: (o, g) =>
 		o.col = g
-
-	--will automatically return the size of a colList
-	checkCol: (s, x, y, colg) =>
-		return #self.col\colList(s, x, y, colg)
 
 	--kinda useless; polls object to see if it can access this lib			
 	test: =>
