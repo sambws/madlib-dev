@@ -57,34 +57,30 @@ mad = {
     return a.z > b.z
   end,
   object = {
-    addEnt = function(self, e)
-      table.insert(ents, e)
-      if e.new ~= nil then
-        e:new()
+    createEnt = function(self, ent)
+      table.insert(ents, ent)
+      if ent.new ~= nil then
+        ent:new()
       end
       entAmt = entAmt + 1
       if debug then
-        return print("created ent ", e)
+        return print("created ent ", ent)
       end
     end,
-    createEnt = function(self, e)
-      return self:addEnt(e)
-    end,
-    createGUI = function(self, e)
-      local a = e
-      if e.new ~= nil then
-        e:new()
+    createGUI = function(self, ent)
+      table.insert(gui, ent)
+      if ent.new ~= nil then
+        ent:new()
       end
-      table.insert(gui, e)
       if debug then
-        return print("created gui ", e)
+        return print("created gui ", ent)
       end
     end,
-    removeEnt = function(self, e)
+    removeEnt = function(self, ent)
       for k, v in pairs(ents) do
-        if v == e then
+        if v == ent then
           if v.destroy ~= nil then
-            e:destroy()
+            ent:destroy()
           end
           entAmt = entAmt - 1
           ents[k] = nil
@@ -96,19 +92,19 @@ mad = {
     end
   },
   sprite = {
-    img = function(self, p)
-      return love.graphics.newImage(path.img .. p)
+    img = function(self, img_name)
+      return love.graphics.newImage(path.img .. img_name)
     end,
-    gImg = function(self, p, fw, fh)
-      local i = love.graphics.newImage(path.img .. p)
-      local g = anim8.newGrid(fw, fh, i:getWidth(), i:getHeight())
+    grid = function(self, image, frame_width, frame_height)
+      return anim8.newGrid(frame_width, frame_height, image:getWidth(), image:getHeight())
+    end,
+    gImg = function(self, image_name, frame_width, frame_height)
+      local i = love.graphics.newImage(path.img .. image_name)
+      local g = anim8.newGrid(frame_width, frame_height, i:getWidth(), i:getHeight())
       return i, g
     end,
-    grid = function(self, img, tw, th)
-      return anim8.newGrid(tw, th, img:getWidth(), img:getHeight())
-    end,
-    anim = function(self, g, f, r, spd)
-      return anim8.newAnimation(g(f, r), spd)
+    anim = function(self, grid, frames, row, speed)
+      return anim8.newAnimation(grid(frames, row), speed)
     end,
     zord = function(self, s, mod)
       mod = mod or 0
@@ -116,25 +112,25 @@ mad = {
     end
   },
   input = {
-    key = function(self, k)
-      if love.keyboard.isDown(k) then
+    key = function(self, key_code)
+      if love.keyboard.isDown(key_code) then
         return true
       else
         return false
       end
     end,
-    joyButton = function(self, c, b)
-      if c:isGamepadDown(b) then
+    joyButton = function(self, controller, button)
+      if controller:isGamepadDown(button) then
         return true
       else
         return false
       end
     end,
-    joyAxis = function(self, c, a)
-      return c:getAxis(a)
+    joyAxis = function(self, controller, axis)
+      return controller:getAxis(axis)
     end,
-    joyConnected = function(self, c)
-      if joysticks[c] ~= nil then
+    joyConnected = function(self, controller)
+      if joysticks[controller] ~= nil then
         return true
       else
         return false
@@ -146,7 +142,7 @@ mad = {
     end
   },
   room = {
-    switchRoom = function(self, r)
+    switchRoom = function(self, new_room)
       for k, v in pairs((ents)) do
         if v.persistent == false then
           mad.object:removeEnt(v)
@@ -156,15 +152,15 @@ mad = {
           end
         end
       end
-      room = r
+      room = new_room
       switch_room = true
       if debug then
-        return print("switched room to " .. r)
+        return print("switched room to " .. new_room)
       end
     end,
-    runRoom = function(self, r, func)
+    runRoom = function(self, new_room, func)
       if switch_room then
-        if room == r then
+        if room == new_room then
           func()
           if debug then
             print("finished creating objects for " .. room)
@@ -175,16 +171,16 @@ mad = {
     end
   },
   audio = {
-    playSound = function(self, sound, tags, v, p)
-      v = v or 1
-      p = p or 1
-      return TEsound.play(path.snd .. sound, tags, v, p)
+    playSound = function(self, sound, tags, velocity, pitch)
+      velocity = velocity or 1
+      pitch = pitch or 1
+      return TEsound.play(path.snd .. sound, tags, velocity, pitch)
     end,
-    loopSound = function(self, sound, tags, n, v, p)
-      v = v or 1
-      p = p or 1
-      n = n or nil
-      return TEsound.playLooping(path.snd .. sound, tags, n, v, p)
+    loopSound = function(self, sound, tags, loops, velocity, pitch)
+      velocity = velocity or 1
+      pitch = pitch or 1
+      loops = loops or 1
+      return TEsound.playLooping(path.snd .. sound, tags, loops, velocity, pitch)
     end
   },
   cam = {
@@ -202,10 +198,10 @@ mad = {
     end
   },
   col = {
-    colList = function(self, s, x, y, colg)
+    colList = function(self, s, x, y, collision_group)
       local list = { }
       for k, v in pairs(ents) do
-        if v.col == colg and v ~= s then
+        if v.col == collision_group and v ~= s then
           if self:boundingBox(x, y, s, v) then
             table.insert(list, v)
           end
@@ -216,8 +212,8 @@ mad = {
     boundingBox = function(self, x, y, o, o2)
       return x < o2.x + o2.w and o2.x < x + o.w and y < o2.y + o2.h and o2.y < y + o.h
     end,
-    checkCol = function(self, s, x, y, colg)
-      return #self:colList(s, x, y, colg)
+    checkCol = function(self, s, x, y, collision_group)
+      return #self:colList(s, x, y, collision_group)
     end
   },
   setCollisionGroup = function(self, o, g)

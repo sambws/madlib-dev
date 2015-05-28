@@ -87,31 +87,28 @@ export mad = {
 
 	--entities
 	object:
-		--run entity's new function and then add it to the ent table
-		addEnt: (e) =>
-			table.insert(ents, e)
-			if e.new ~= nil then e\new()
+	
+		--will put a new class into the game
+		createEnt: (ent) =>
+			table.insert(ents, ent)
+			if ent.new ~= nil then ent\new()
 			entAmt += 1
 
-			if debug then print("created ent ", e)
-
-		--will put a new class into the game
-		createEnt: (e) =>
-			@addEnt(e)
+			if debug then print("created ent ", ent)
 
 		--inserts an object into the gui table
-		createGUI: (e) =>
-			a = e
-			if e.new ~= nil then e\new()
-			table.insert(gui, e)
-			if debug then print("created gui ", e)
+		createGUI: (ent) =>
+			table.insert(gui, ent)
+			if ent.new ~= nil then ent\new()
+
+			if debug then print("created gui ", ent)
 
 		--weird and probably doensn't work
-		removeEnt: (e) =>
+		removeEnt: (ent) =>
 			for k, v in pairs ents
-				if v == e then
+				if v == ent then
 					--run actions
-					if v.destroy ~= nil then e\destroy()
+					if v.destroy ~= nil then ent\destroy()
 					entAmt -= 1
 
 					--make the entity nil
@@ -123,22 +120,22 @@ export mad = {
 	--drawing and animating
 	sprite:
 		--returns a basic image from a path
-		img: (p) =>
-			return love.graphics.newImage(path.img .. p)
-
-		--sets up an image with a grid for animation
-		gImg: (p, fw, fh) =>
-			i = love.graphics.newImage(path.img .. p)
-			g = anim8.newGrid(fw, fh, i\getWidth(), i\getHeight())
-			return i, g
+		img: (img_name) =>
+			return love.graphics.newImage(path.img .. img_name)
 
 		--sets up a grid for an image
-		grid: (img, tw, th) =>
-			return anim8.newGrid(tw, th, img\getWidth(), img\getHeight())
+		grid: (image, frame_width, frame_height) =>
+			return anim8.newGrid(frame_width, frame_height, image\getWidth(), image\getHeight())
 
-		--defines an animation (grid, frames, row, interval)
-		anim: (g, f, r, spd) =>
-			return anim8.newAnimation(g(f, r), spd)
+		--sets up an image with a grid for animation
+		gImg: (image_name, frame_width, frame_height) =>
+			i = love.graphics.newImage(path.img .. image_name)
+			g = anim8.newGrid(frame_width, frame_height, i\getWidth(), i\getHeight())
+			return i, g
+
+		--defines an animation
+		anim: (grid, frames, row, speed) =>
+			return anim8.newAnimation(grid(frames, row), speed)
 
 		--zord ents (called in base)
 		zord: (s, mod) =>
@@ -148,26 +145,26 @@ export mad = {
 	--what the player will input to the game
 	input:
 		--basic keyboard keys
-		key: (k) =>
-			if love.keyboard.isDown(k) then
+		key: (key_code) =>
+			if love.keyboard.isDown(key_code) then
 				return true
 			else
 				return false
 
 		--get gamepad button down
-		joyButton: (c, b) =>
-			if c\isGamepadDown(b) then
+		joyButton: (controller, button) =>
+			if controller\isGamepadDown(button) then
 				return true
 			else
 				return false
 
 		--get axis of gamepad
-		joyAxis: (c, a) =>
-			return c\getAxis(a)
+		joyAxis: (controller, axis) =>
+			return controller\getAxis(axis)
 
 		--check if there's a certain controller connected
-		joyConnected: (c) =>
-			if joysticks[c] ~= nil
+		joyConnected: (controller) =>
+			if joysticks[controller] ~= nil
 				return true
 			else
 				return false
@@ -180,7 +177,7 @@ export mad = {
 	--rooms
 	room:
 		--set room
-		switchRoom: (r) =>
+		switchRoom: (new_room) =>
 			--delete everything non-persistent
 			for k, v in pairs (ents)
     			if v.persistent == false
@@ -188,14 +185,14 @@ export mad = {
     			else
     				if debug then print(v, "is persistent")
     		--set room; run code
-			room = r
+			room = new_room
 			switch_room = true
-			if debug then print("switched room to " .. r)
+			if debug then print("switched room to " .. new_room)
 
 		--run room creation func
-		runRoom: (r, func) =>
+		runRoom: (new_room, func) =>
 			if switch_room
-				if room == r
+				if room == new_room
 					func!
 					if debug then print("finished creating objects for " .. room)
 					switch_room = false
@@ -203,17 +200,17 @@ export mad = {
 	--sound functionality
 	audio:
 		--plays a sound
-		playSound: (sound, tags, v, p) =>
-			v = v or 1
-			p = p or 1
-			TEsound.play(path.snd .. sound, tags, v, p)
+		playSound: (sound, tags, velocity, pitch) =>
+			velocity = velocity or 1
+			pitch = pitch or 1
+			TEsound.play(path.snd .. sound, tags, velocity, pitch)
 
 		--loop sound
-		loopSound: (sound, tags, n, v, p) =>
-			v = v or 1
-			p = p or 1
-			n = n or nil
-			TEsound.playLooping(path.snd .. sound, tags, n, v, p)
+		loopSound: (sound, tags, loops, velocity, pitch) =>
+			velocity = velocity or 1
+			pitch = pitch or 1
+			loops = loops or 1
+			TEsound.playLooping(path.snd .. sound, tags, loops, velocity, pitch)
 
 	--some random camera functions i guess
 	cam:
@@ -231,10 +228,10 @@ export mad = {
 
 	col:
 		--will return how many objects of a given tag are within an object's boundingbox
-		colList: (s, x, y, colg) =>
+		colList: (s, x, y, collision_group) =>
 			list = {}
 			for k, v in pairs ents
-				if v.col == colg and v ~= s then
+				if v.col == collision_group and v ~= s then
 					if @boundingBox(x, y, s, v) then
 						table.insert(list, v)
 			return list
@@ -244,8 +241,8 @@ export mad = {
 			return x < o2.x+o2.w and o2.x < x+o.w and y < o2.y+o2.h and o2.y < y+o.h
 
 		--will automatically return the size of a colList
-		checkCol: (s, x, y, colg) =>
-			return #@colList(s, x, y, colg)
+		checkCol: (s, x, y, collision_group) =>
+			return #@colList(s, x, y, collision_group)
 
 
 	--set col group for ent
