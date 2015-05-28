@@ -16,12 +16,8 @@ export camera = require "lib.camera" --camera
 	--camera
 	--really basic entity mapper
 --TODO
-	--improve argument names for functions
 	--work on the entity mapper
-	--optimize functions so they don't all use fat arrows (i'm a dumbass)
 	--STI STI STI STI!!!!!!!
-	--make a branch that uses gamera instead of hump.camera to see if it's more intuitive (would have to heavily rework draw())
-	--spend 400 hours organizing this mess
 	--in-game debug console???
 
 --controllas
@@ -77,7 +73,7 @@ export mad = {
 					cam\detach()
 				else
 					v\draw!
-					
+
 		--debuggin'
 		if debug then
 			love.graphics.setColor(255, 255, 255, 255)
