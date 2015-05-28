@@ -1,6 +1,9 @@
 do
   local _parent_0 = Entity
   local _base_0 = {
+    update = function(self, dt)
+      return _parent_0.update(self, self)
+    end,
     draw = function(self)
       love.graphics.setColor(255, 255, 255, 255)
       return love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)

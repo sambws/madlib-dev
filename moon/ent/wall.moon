@@ -7,6 +7,10 @@ class Wall extends Entity
 		@h = 32
 
 		mad\setCollisionGroup(@, col.obj)
+
+	update: (dt) =>
+		super self
+	
 	draw: =>
 		love.graphics.setColor(255, 255, 255, 255)
 		love.graphics.rectangle("fill", @x, @y, @w, @h)

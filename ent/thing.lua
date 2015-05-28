@@ -17,6 +17,7 @@ do
       if mad.input:key("down") then
         self.y = self.y + 2
       end
+      return _parent_0.update(self, self)
     end,
     draw = function(self)
       love.graphics.setColor(0, 0, 255, 255)

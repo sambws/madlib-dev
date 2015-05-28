@@ -21,6 +21,8 @@ class Thing extends Entity
 		if mad.input\key("down") then
 			@y += 2
 
+		super self
+
 	draw: =>
 		love.graphics.setColor(0, 0, 255, 255)
 		love.graphics.rectangle("fill", @x, @y, @w, @h)

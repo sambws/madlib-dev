@@ -62,10 +62,12 @@ export mad = {
 	draw: (tab, cam) =>
 		--is there a camera?
 		cam = cam or nil
+
 		--zorder them up
 		if tab == ents then
 			if not switch_room then
 				table.sort(tab, @drawSort)
+
 		--draw em
 		for k, v in pairs tab
 			if v.draw ~= nil then 
@@ -75,6 +77,7 @@ export mad = {
 					cam\detach()
 				else
 					v\draw!
+					
 		--debuggin'
 		if debug then
 			love.graphics.setColor(255, 255, 255, 255)
